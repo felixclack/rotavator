@@ -7,7 +7,7 @@ development:
   # Mysql Settings
   adapter: mysql
   encoding: utf8
-  database: a_development
+  database: rota_development
   username: root
   password:
 
@@ -20,7 +20,7 @@ test:
   # Mysql Settings
   adapter: mysql
   encoding: utf8
-  database: a_test
+  database: rota_test
   username: root
   password:
 
@@ -33,6 +33,6 @@ production:
   # Mysql Settings
   adapter: mysql
   encoding: utf8
-  database: a_production
+  database: rota_production
   username: root
   password:

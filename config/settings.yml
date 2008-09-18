@@ -1,12 +1,12 @@
 development: &non_production_settings
-  site_url: http://localhost:3000
-  site_name: Bort
-  admin_email: bort@bort.com
+  site_url: http://rotavator.dev
+  site_name: Rotavator
+  admin_email: felixclack@gmail.com
   
 test:
   <<: *non_production_settings
   
 production:
-  site_url: http://www.example.com
-  site_name: Bort
-  admin_email: bort@bort.com
+  site_url: http://www.rotavator.com
+  site_name: Rotavator
+  admin_email: felixclack@gmail.com
