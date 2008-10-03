@@ -8,10 +8,10 @@ class User < ActiveRecord::Base
 
   validates_format_of :name, :with => RE_NAME_OK, :message => MSG_NAME_BAD, :allow_nil => true
   validates_length_of :name, :maximum => 100
-  validates_presence_of :email
-  validates_length_of :email, :within => 6..100 #r@a.wk
-  validates_uniqueness_of :email, :case_sensitive => false
-  validates_format_of :email, :with => RE_EMAIL_OK, :message => MSG_EMAIL_BAD
+  validates_presence_of :login
+  validates_length_of :login, :within => 3..100 #r@a.wk
+  validates_uniqueness_of :login, :case_sensitive => false
+  #validates_format_of :email, :with => RE_EMAIL_OK, :message => MSG_EMAIL_BAD
   
   # Relationships
   has_and_belongs_to_many :roles
@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :email, :name, :password, :password_confirmation
+  attr_accessible :login, :name, :password, :password_confirmation
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
@@ -30,6 +30,18 @@ class User < ActiveRecord::Base
   def self.authenticate(email, password)
     u = find_in_state :first, :active, :conditions => { :email => email } # need to get the salt
     u && u.authenticated?(password) ? u : nil
+  end
+  
+  def self.basecamp_authenticate(login, password)
+    p = Person.new
+    present = p.is_waca?(login, password)
+    u = find_in_state :first, :active, :conditions => { :login => login } # need to get the salt
+    if present && u.nil?
+      u = User.create!(:login => login, :password => password, :password_confirmation => password)
+      u.register!
+      u.activate!
+    end
+    u && present ? u : nil
   end
   
   # Check if a user has a role.
