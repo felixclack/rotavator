@@ -1,3 +1,7 @@
 %p
-  %label{:for => "participation_state"} State:
-  = f.text_field :state
+  = f.label :position_id, "Position"
+  = f.collection_select :position_id, Position.all, :id, :name
+  
+%p
+  = f.label :rota_id, "Rota"
+  = f.select :rota_id, @rotas

@@ -3,8 +3,8 @@
     %strong State
     = h participation.state
 
-  = link_to 'Show', object_path(participation)
+  = link_to 'Show', user_participation_path(@user, participation)
   |
-  = link_to 'Edit', edit_object_path(participation)
+  = link_to 'Edit', edit_user_participation_path(@user, participation)
   |
-  = link_to 'Destroy', object_path(participation), :confirm => 'Really destroy participation?', :method => :delete
+  = link_to 'Destroy', user_participation_path(@user, participation), :confirm => 'Really destroy participation?', :method => :delete

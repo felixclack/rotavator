@@ -1,12 +1,21 @@
 %h1 Viewing participation
 
-%div[current_object]
+%div[@participation]
+  %p.service
+    %strong Service:
+    = h @participation.rota.service.location.name
+    = h @participation.rota.service.start_at.to_s
+    
+  %p.position
+    %strong Position:
+    = h @participation.position.name
+    
   %p.state
     %strong State
-    = h current_object.state
+    = h @participation.state
 
-= link_to 'Edit', edit_object_path
+= link_to 'Edit', edit_user_participation_path(@user, @participation)
 |
-= link_to 'Destroy', object_path, :confirm => 'Really destroy participation?', :method => :delete
+= link_to 'Destroy', user_participation_path(@user, @participation), :confirm => 'Really destroy participation?', :method => :delete
 |
-= link_to 'Back', objects_path
+= link_to 'Back', user_participations_path(@user)

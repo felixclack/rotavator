@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :get_user, :only => [:show, :edit, :update]
   def new
     @user = User.new
   end
@@ -33,4 +34,35 @@ class UsersController < ApplicationController
       redirect_back_or_default('/')
     end
   end
+  
+  def show
+  end
+  
+  def edit
+  end
+  
+  def update
+    unless params[:locations].nil?
+      params[:locations][:location_ids].each do |location_id|
+        @user.locations << Location.find(location_id)
+      end
+    end
+    unless params[:positions].nil?
+      params[:positions][:position_ids].each do |position_id|
+        @user.positions << Position.find(position_id)
+      end
+    end
+    if @user.update_attributes(params[:user])
+      flash[:notice] = "Updated"
+      redirect_to user_path
+    else
+      flash[:error] = "Error"
+      render :action => "edit"
+    end
+  end
+  
+  protected
+    def get_user
+      @user = User.find(params[:id])
+    end
 end

@@ -74,6 +74,12 @@ class User < ActiveRecord::Base
     list ||= self.roles.map(&:name)
     list.include?(role.to_s) || list.include?('admin')
   end
+  
+  def rotas_available_for
+    self.locations.map do |location|
+      location.rotas.future.map{|r| ["#{r.service.start_at} #{location.name}", r.id] }.flatten
+    end
+  end
 
   protected
     

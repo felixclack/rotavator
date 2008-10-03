@@ -19,6 +19,8 @@ class Participation < ActiveRecord::Base
   belongs_to :position
   belongs_to :rota
   
+  named_scope :future, :include => [:rota => :service], :conditions => ["services.start_at > ?", Time.now]
+  
   aasm_initial_state :assigned
   aasm_state :assigned
   aasm_state :confirmed

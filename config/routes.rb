@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
 
   map.resources :positions
-  map.resources :participations
+  #map.resources :participations
   map.resources :teams
   #map.resources :rotas
   #map.resources :services
@@ -17,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
   map.change_password '/change_password/:reset_code', :controller => 'passwords', :action => 'reset'
   
   # Restful Authentication Resources
-  map.resources :users
+  map.resources :users, :has_many => :participations
   map.resources :passwords
   map.resource :session
   

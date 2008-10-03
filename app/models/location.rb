@@ -9,4 +9,5 @@
 
 class Location < ActiveRecord::Base
   has_many :services, :attributes => true
+  has_many :rotas, :through => :services
 end

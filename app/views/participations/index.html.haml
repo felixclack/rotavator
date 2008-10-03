@@ -1,5 +1,5 @@
 %h1 Listing participations
 
-= render :partial => 'participation', :collection => current_objects
+= render :partial => 'participation', :collection => @participations
 
-= link_to 'New participation', new_object_path 
+= link_to 'New participation', new_user_participation_path(@user)

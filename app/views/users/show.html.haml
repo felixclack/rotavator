@@ -1,0 +1,24 @@
+%div[@user]
+  %h1= h @user.name
+
+  %p.login
+    %strong Login:
+    = h @user.login
+  
+  %p.email
+    %strong Email:
+    = h @user.email
+  
+  - if @user.locations
+    %p.locations
+      Locations:
+      - @user.locations.each do |location|
+        = link_to location.name, location_path(location)
+
+  - if @user.positions
+    %p.positions
+      Positions:
+      = @user.positions.map{|p| p.name}.join(", ")
+
+= link_to "Edit", edit_user_path
+= link_to "Delete", user_path, :confirm => "Are you sure?", :method => :delete

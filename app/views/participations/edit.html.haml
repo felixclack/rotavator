@@ -2,10 +2,6 @@
 
 = error_messages_for :participation
 
-- form_for(:participation, :url => object_url, :html => { :method => :put }) do |f|
+- form_for(:participation, :url => user_participation_url(@user, @participation), :html => { :method => :put }) do |f|
   = render :partial => "form", :locals => {:f => f}
   %p= submit_tag "Update"
-
-= link_to 'Show', object_path
-|
-= link_to 'Back', objects_path

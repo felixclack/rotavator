@@ -18,4 +18,6 @@ class Rota < ActiveRecord::Base
   has_many :positions, :through => :participations
   
   validates_presence_of :service_id, :team_id
+  
+  named_scope :future, :include => :service, :conditions => ["services.start_at > ?", Time.now]
 end

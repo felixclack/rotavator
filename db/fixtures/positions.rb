@@ -3,6 +3,10 @@ Position.seed(:name) do |s|
 end
 
 Position.seed(:name) do |s|
+  s.name = "MD"
+end
+
+Position.seed(:name) do |s|
   s.name = "BV"
 end
 
