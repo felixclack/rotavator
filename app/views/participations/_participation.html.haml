@@ -1,0 +1,10 @@
+%div[participation]
+  %p.state
+    %strong State
+    = h participation.state
+
+  = link_to 'Show', object_path(participation)
+  |
+  = link_to 'Edit', edit_object_path(participation)
+  |
+  = link_to 'Destroy', object_path(participation), :confirm => 'Really destroy participation?', :method => :delete

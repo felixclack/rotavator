@@ -1,0 +1,3 @@
+%p
+  = f.label :service_id, "Service"
+  = f.collection_select :service_id, @location.services.future.all, :id, :start_at

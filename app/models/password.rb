@@ -1,3 +1,16 @@
+# == Schema Information
+# Schema version: 20081003121500
+#
+# Table name: passwords
+#
+#  id              :integer(11)     not null, primary key
+#  user_id         :integer(11)
+#  reset_code      :string(255)
+#  expiration_date :datetime
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
 require 'digest/sha1'
 
 class Password < ActiveRecord::Base

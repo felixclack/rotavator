@@ -1,0 +1,13 @@
+%div[@service]
+  %p.start_at
+    %strong Start at
+    = h @service.start_at
+
+= link_to 'Edit', edit_location_service_path(@location, @service)
+|
+= link_to 'Delete', location_service_path(@location, @service), :confirm => 'Really delete service?', :method => :delete
+
+- content_for :context do
+  %h2 
+    Location:
+    = h @location.name

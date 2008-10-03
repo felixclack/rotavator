@@ -3,23 +3,38 @@
 %html
   %head
     %title= @page_title || APP_CONFIG[:site_name]
+    
     <meta http-equiv="content-type" content="text/xhtml; charset=utf-8" />
     <meta http-equiv="imagetoolbar" content="no" />
     <meta name="distribution" content="all" />
     <meta name="robots" content="all" />	
     <meta name="resource-type" content="document" />
     <meta name="MSSmartTagsPreventParsing" content="true" />
-    = stylesheet_link_tag 'base'
+    
+    = stylesheet_link_tag 'reset', 'base'
     = javascript_include_tag :defaults
   %body
     #container
       #header
-        %ul
-          - if logged_in?
-            %li= link_to 'Logout', logout_path
-          - else
-            %li= link_to 'Login', login_path
+        #account
+          %h1 Rotavator
+          %ul
+            - if logged_in?
+              %li= link_to 'My account', user_path(current_user)
+              %li= link_to 'Logout', logout_path
+            - else
+              %li= link_to 'Login', login_path
+        
+        %h2 WACA Rota's
+        #nav
+          %ul
+            %li.selected= link_to "Home", root_path
+            %li= link_to "Upcoming positions"
       
       #content
-        = flash_messages
-        = yield :layout
+        #main
+          = flash_messages
+          = yield :layout
+        
+        #context
+          = yield :context

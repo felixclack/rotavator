@@ -1,4 +1,12 @@
-ActionController::Routing::Routes.draw do |map| 
+ActionController::Routing::Routes.draw do |map|
+
+  map.resources :positions
+  map.resources :participations
+  map.resources :teams
+  #map.resources :rotas
+  #map.resources :services
+  map.resources :locations, :has_many => [:services, :rotas]
+ 
   # Restful Authentication Rewrites
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
@@ -15,8 +23,4 @@ ActionController::Routing::Routes.draw do |map|
   
   # Home Page
   map.root :controller => 'pages', :action => 'dashboard'
-
-  # Install the default routes as the lowest priority.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
 end

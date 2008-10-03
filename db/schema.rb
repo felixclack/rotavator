@@ -9,7 +9,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081003101449) do
+ActiveRecord::Schema.define(:version => 20081003121500) do
+
+  create_table "locations", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "locations_users", :force => true do |t|
+    t.integer "location_id"
+    t.integer "user_id"
+  end
+
+  create_table "participations", :force => true do |t|
+    t.string   "state"
+    t.integer  "user_id"
+    t.integer  "rota_id"
+    t.integer  "position_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "passwords", :force => true do |t|
     t.integer  "user_id"
@@ -17,6 +35,15 @@ ActiveRecord::Schema.define(:version => 20081003101449) do
     t.datetime "expiration_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "positions", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "positions_users", :force => true do |t|
+    t.integer "position_id"
+    t.integer "user_id"
   end
 
   create_table "roles", :force => true do |t|
@@ -28,6 +55,18 @@ ActiveRecord::Schema.define(:version => 20081003101449) do
     t.integer "user_id"
   end
 
+  create_table "rotas", :force => true do |t|
+    t.integer  "service_id"
+    t.integer  "team_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "services", :force => true do |t|
+    t.datetime "start_at"
+    t.integer  "location_id"
+  end
+
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :default => "", :null => false
     t.text     "data"
@@ -37,6 +76,11 @@ ActiveRecord::Schema.define(:version => 20081003101449) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "teams", :force => true do |t|
+    t.string "name"
+    t.string "basecamp_name"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name",                      :limit => 100, :default => ""

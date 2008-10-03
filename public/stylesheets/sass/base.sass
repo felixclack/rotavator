@@ -1,0 +1,132 @@
+body
+  :font 62.5%/140% "Lucida Grande", Helvetica, Arial
+  :background #fff
+  :color #333
+  
+a
+  :text-decoration none
+  :color #000
+  :font-weight bold
+  &:hover
+    :color #999
+    
+p
+  :font-size 1.2em
+  :line-height normal
+  
+h1
+  :font-size 3em
+  :line-height normal
+  
+h2
+  :font-size 2em
+  :line-height normal
+  
+h3
+  :font-size 1.4em
+  :line-height normal
+  
+#header
+  :background #666
+  :color #000
+  :width 100%
+  :float left
+  :position relative
+  #account
+    :width 100%
+    :float left
+    :background #000
+    :color #fff
+    h1
+      :width auto
+      :font-size 1.2em
+      :line-height normal
+      :float left
+      :padding .4em
+    ul
+      :float right
+      :margin-right 1em
+      :width auto
+      :font-size 1.2em
+      :padding .4em
+      li
+        :float left
+        :width auto
+        :margin-left 1em
+        a
+          :color #fff
+          :font-weight normal
+          &:hover
+            :color #ccc
+  h2
+    :float right
+    :width auto
+    :padding .4em
+    :color #fff
+  #nav
+    :position absolute
+    :width auto
+    :left 1em
+    :bottom 0
+    ul
+      :float left
+      :width auto
+      :font-size 1.4em
+      :line-height normal
+      li
+        :float left
+        :width auto
+        a
+          :margin-right .3em
+          :background #bbb
+          :padding .2em .6em
+          :display block
+          &:hover
+            :background #fff
+            :color #000
+        &.selected
+          a
+            :background #fff
+            &:hover
+              :background #fff
+              :color #000
+#content
+  :float left
+  :width 100%
+  #main
+    :width 66%
+    :float left
+    :padding 1em
+  #context
+    :float right
+    :width 28%
+    :background #999
+    :padding 1em 1em 1em 2%
+    :color #000
+        
+
+/* === FLASH MESSAGES === */
+#flash-notice
+  :background green
+  :color #fff
+#flash-warning
+  :background orange
+  :color #fff
+#flash-error
+  :background red
+  :color #fff
+
+/* === ERROR MESSAGES === */
+#errorExplanation
+  :color red
+  h2
+  p
+  ul
+    li
+
+/* === FORMS === */
+.fieldWithErrors
+  label
+    :color red
+  input, select, textarea
+    :border 1px solid red

@@ -1,0 +1,12 @@
+%h1 Viewing rota
+
+%div[@rota]
+  = @rota.team.name
+  = @rota.service.start_at.to_s
+  = @rota.service.location.name
+
+  = link_to 'Edit', edit_location_rota_path(@location, @rota)
+  |
+  = link_to 'Delete', location_rota_path(@location, @rota), :confirm => 'Really delete rota?', :method => :delete
+  |
+  = link_to 'Back', location_rotas_path(@location)

@@ -1,0 +1,9 @@
+%h1 Creating team
+
+= error_messages_for :team
+
+- form_for(:team, :url => objects_url) do |f|
+  = render :partial => "form", :locals => {:f => f}
+  %p= submit_tag "Create"
+
+= link_to 'Back', objects_path

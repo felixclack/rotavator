@@ -1,3 +1,4 @@
-%h1 
-  Dashboard for 
-  = current_user.login
+%h1 Dashboard 
+  
+- content_for :context do
+  %h3= current_user.login

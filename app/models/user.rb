@@ -1,3 +1,24 @@
+# == Schema Information
+# Schema version: 20081003121500
+#
+# Table name: users
+#
+#  id                        :integer(11)     not null, primary key
+#  name                      :string(100)     default("")
+#  email                     :string(100)
+#  crypted_password          :string(40)
+#  salt                      :string(40)
+#  remember_token            :string(40)
+#  activation_code           :string(40)
+#  state                     :string(255)     default("passive")
+#  remember_token_expires_at :datetime
+#  activated_at              :datetime
+#  deleted_at                :datetime
+#  created_at                :datetime
+#  updated_at                :datetime
+#  login                     :string(255)
+#
+
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
@@ -15,6 +36,9 @@ class User < ActiveRecord::Base
   
   # Relationships
   has_and_belongs_to_many :roles
+  has_many :participations
+  has_and_belongs_to_many :positions
+  has_and_belongs_to_many :locations
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
@@ -34,14 +58,15 @@ class User < ActiveRecord::Base
   
   def self.basecamp_authenticate(login, password)
     p = Person.new
-    present = p.is_waca?(login, password)
     u = find_in_state :first, :active, :conditions => { :login => login } # need to get the salt
-    if present && u.nil?
-      u = User.create!(:login => login, :password => password, :password_confirmation => password)
-      u.register!
-      u.activate!
+    if u.nil?
+      if p.is_waca?(login, password)
+        u = User.create!(:login => login, :password => password, :password_confirmation => password)
+        u.register!
+        u.activate!
+      end
     end
-    u && present ? u : nil
+    u && u.authenticated?(password) ? u : nil
   end
   
   # Check if a user has a role.

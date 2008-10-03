@@ -1,0 +1,13 @@
+%div[team]
+  %p.name
+    %strong Name
+    = h team.name
+  %p.basecamp_name
+    %strong Basecamp name
+    = h team.basecamp_name
+
+  = link_to 'Show', object_path(team)
+  |
+  = link_to 'Edit', edit_object_path(team)
+  |
+  = link_to 'Destroy', object_path(team), :confirm => 'Really destroy team?', :method => :delete

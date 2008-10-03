@@ -1,48 +1,128 @@
-/* === FLASH MESSAGES === */
-div#flash-notice {
-	
-}
+body {
+  font: 62.5%/140% "Lucida Grande", Helvetica, Arial;
+  background: #fff;
+  color: #333; }
 
-div#flash-warning {
-	
-}
+a {
+  text-decoration: none;
+  color: #000;
+  font-weight: bold; }
+  a:hover {
+    color: #999; }
 
-div#flash-error {
-	
-}
+p {
+  font-size: 1.2em;
+  line-height: normal; }
 
-/* === ERROR MESSAGES === */
-div#errorExplanation {
-	
-}
+h1 {
+  font-size: 3em;
+  line-height: normal; }
 
-div#errorExplanation h2 {
-	
-}
+h2 {
+  font-size: 2em;
+  line-height: normal; }
 
-div#errorExplanation p {
-	
-}
+h3 {
+  font-size: 1.4em;
+  line-height: normal; }
 
-div#errorExplanation ul {
-	
-}
+#header {
+  background: #666;
+  color: #000;
+  width: 100%;
+  float: left;
+  position: relative; }
+  #header #account {
+    width: 100%;
+    float: left;
+    background: #000;
+    color: #fff; }
+    #header #account h1 {
+      width: auto;
+      font-size: 1.2em;
+      line-height: normal;
+      float: left;
+      padding: .4em; }
+    #header #account ul {
+      float: right;
+      margin-right: 1em;
+      width: auto;
+      font-size: 1.2em;
+      padding: .4em; }
+      #header #account ul li {
+        float: left;
+        width: auto;
+        margin-left: 1em; }
+        #header #account ul li a {
+          color: #fff;
+          font-weight: normal; }
+          #header #account ul li a:hover {
+            color: #ccc; }
+  #header h2 {
+    float: right;
+    width: auto;
+    padding: .4em;
+    color: #fff; }
+  #header #nav {
+    position: absolute;
+    width: auto;
+    left: 1em;
+    bottom: 0; }
+    #header #nav ul {
+      float: left;
+      width: auto;
+      font-size: 1.4em;
+      line-height: normal; }
+      #header #nav ul li {
+        float: left;
+        width: auto; }
+        #header #nav ul li a {
+          margin-right: .3em;
+          background: #bbb;
+          padding: .2em .6em;
+          display: block; }
+          #header #nav ul li a:hover {
+            background: #fff;
+            color: #000; }
+        #header #nav ul li.selected a {
+          background: #fff; }
+          #header #nav ul li.selected a:hover {
+            background: #fff;
+            color: #000; }
 
-div#errorExplanation ul li {
-	
-}
+#content {
+  float: left;
+  width: 100%; }
+  #content #main {
+    width: 66%;
+    float: left;
+    padding: 1em; }
+  #content #context {
+    float: right;
+    width: 28%;
+    background: #999;
+    padding: 1em 1em 1em 2%;
+    color: #000; }
 
-/* === FORMS === */
-div.fieldWithErrors {
-	
-}
+/* === FLASH MESSAGES === */ */
+#flash-notice {
+  background: green;
+  color: #fff; }
 
-div.fieldWithErrors label {
-	
-}
+#flash-warning {
+  background: orange;
+  color: #fff; }
 
-div.fieldWithErrors input, div.fieldWithErrors select, 
-div.fieldWithErrors textarea
-{
-	
-}
+#flash-error {
+  background: red;
+  color: #fff; }
+
+/* === ERROR MESSAGES === */ */
+#errorExplanation {
+  color: red; }
+
+/* === FORMS === */ */
+.fieldWithErrors label {
+  color: red; }
+.fieldWithErrors input, .fieldWithErrors select, .fieldWithErrors textarea {
+  border: 1px solid red; }
