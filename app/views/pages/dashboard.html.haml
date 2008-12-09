@@ -1,4 +1,42 @@
-%h1 Dashboard 
+.dashboard
+  %h1 Dashboard
+  
+  #your_details
+    .locations
+      %h3 Your locations:
+      %p= current_user.locations_available_for
+    
+    .positions
+      %h3 Your positions:
+      %p= current_user.positions_available_for
+      
+  #upcoming_schedule
+    %h2 Your upcoming positions
+    - unless current_user.upcoming_positions.empty?
+      %ul
+        - current_user.upcoming_positions.each do |participation|
+          - row_class = cycle("odd","even")
+          %li{:class=>row_class}
+            %span.date= participation.rota.service.start_at.to_formatted_s(:short)
+            %span.location= h participation.rota.service.location.name
+            %span.position= h participation.position.name
+    - else
+      %p You have no upcoming positions at the moment.
+      
+  #pending_positions
+    %h2 Your pending positions
+    - unless current_user.pending_positions.empty?
+      %ul
+        - current_user.pending_positions.each do |position|
+          - row_class = cycle("odd","even")
+          %li{:class=>row_class}
+            %span.date= participation.rota.service.start_at.to_formatted_s(:short)
+            %span.location= h participation.rota.service.location.name
+            %span.position= h participation.position.name
+    - else
+      %p You have no pending positions at the moment.
+      
+
   
 - content_for :context do
   %h3= current_user.login

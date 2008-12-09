@@ -1,5 +1,10 @@
 class PositionsController < ApplicationController
-  make_resourceful do
-    actions :all
-  end
+  resource_controller
+  belongs_to :user
+  
+  private
+    def collection
+      @collection ||= current_user.positions.all
+    end
+  
 end

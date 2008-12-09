@@ -1,10 +1,2 @@
 %div[position]
-  %p.name
-    %strong Name
-    = h position.name
-
-  = link_to 'Show', object_path(position)
-  |
-  = link_to 'Edit', edit_object_path(position)
-  |
-  = link_to 'Destroy', object_path(position), :confirm => 'Really destroy position?', :method => :delete
+  %p.name= h position.name

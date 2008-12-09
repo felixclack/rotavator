@@ -1,7 +1,7 @@
-%h1 Creating service
+%h1== Creating service at #{@location.name}
 
 = error_messages_for :service
 
-- form_for(:service, :url => location_service_url(@location, @service)) do |f|
+- form_for([@location, @service]) do |f|
   = render :partial => "form", :locals => {:f => f}
   %p= submit_tag "Create"

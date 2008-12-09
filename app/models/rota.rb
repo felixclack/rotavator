@@ -13,7 +13,7 @@
 class Rota < ActiveRecord::Base
   belongs_to :service
   belongs_to :team
-  has_many :participations
+  has_many :participations, :attributes => true
   has_many :users, :through => :participations
   has_many :positions, :through => :participations
   

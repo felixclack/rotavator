@@ -1,5 +1,8 @@
-%h1 Listing rotas
+%h1 My Rotas
 
-= render :partial => 'rota', :collection => @rotas
+- if @rotas.empty?
+  %p You haven't been assigned to any rotas at the moment.
+- else
+  = render :partial => 'rota', :collection => @rotas
 
-= link_to 'New rota', new_location_rota_path 
+= link_to 'New rota', new_location_rota_path if params[:location_id]

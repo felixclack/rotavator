@@ -20,6 +20,7 @@
 #
 
 require 'digest/sha1'
+require 'basecamp'
 
 class User < ActiveRecord::Base
   include Authentication
@@ -32,18 +33,19 @@ class User < ActiveRecord::Base
   validates_presence_of :login
   validates_length_of :login, :within => 3..100 #r@a.wk
   validates_uniqueness_of :login, :case_sensitive => false
-  #validates_format_of :email, :with => RE_EMAIL_OK, :message => MSG_EMAIL_BAD
+  validates_format_of :email, :with => RE_EMAIL_OK, :message => MSG_EMAIL_BAD
   
   # Relationships
   has_and_belongs_to_many :roles
   has_many :participations
+  has_many :rotas, :through => :participations
   has_and_belongs_to_many :positions
   has_and_belongs_to_many :locations
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :name, :password, :password_confirmation
+  attr_accessible :login, :name, :password, :password_confirmation, :email
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
@@ -51,8 +53,8 @@ class User < ActiveRecord::Base
   # We really need a Dispatch Chain here or something.
   # This will also let us return a human error message.
   #
-  def self.authenticate(email, password)
-    u = find_in_state :first, :active, :conditions => { :email => email } # need to get the salt
+  def self.authenticate(login, password)
+    u = find_in_state :first, :active, :conditions => { :login => login } # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
   
@@ -60,7 +62,7 @@ class User < ActiveRecord::Base
     p = Person.new
     u = find_in_state :first, :active, :conditions => { :login => login } # need to get the salt
     if u.nil?
-      if p.is_waca?(login, password)
+      if is_waca?(login, password)
         u = User.create!(:login => login, :password => password, :password_confirmation => password)
         u.register!
         u.activate!
@@ -79,6 +81,32 @@ class User < ActiveRecord::Base
     self.locations.map do |location|
       location.rotas.future.map{|r| ["#{r.service.start_at} #{location.name}", r.id] }.flatten
     end
+  end
+  
+  def locations_available_for
+    self.locations.map {|location| location.name}.compact.uniq.join(", ")
+  end
+  
+  def positions_available_for
+    self.positions.map {|position| position.name}.compact.uniq.join(", ")
+  end
+  
+  def upcoming_positions
+    self.participations.future.confirmed
+  end
+  
+  def pending_positions
+    self.participations.future.assigned
+  end
+  
+  def is_waca?(login, password)
+    Basecamp.establish_connection!("xcelchurch.seework.com", login, password)
+    check_for_project_name("WACA+MEDIA")
+  end
+  
+  def check_for_project_name(name)
+    b = Basecamp.new
+    b.projects.map{|a| a["name"] }.include? name
   end
 
   protected

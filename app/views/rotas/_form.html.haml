@@ -1,3 +1,11 @@
 %p
   = f.label :service_id, "Service"
-  = f.collection_select :service_id, @location.services.future.all, :id, :start_at
+  - if @location.services.future.empty?
+    = link_to "Create new service", new_location_service_path(@location)
+  - else
+    = f.collection_select :service_id, @location.services.future.all, :id, :start_at
+
+#participations
+  = f.render_associated_form(@rota.participations) unless @rota.participations.empty?
+
+= f.add_associated_link "Add person", @rota.participations.build

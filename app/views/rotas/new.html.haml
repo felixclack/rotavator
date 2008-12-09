@@ -1,7 +1,12 @@
-%h1 Creating rota
-
 = error_messages_for :rota
 
-- form_for(:rota, :url => location_rota_url(@location, @rota)) do |f|
-  = render :partial => "form", :locals => {:f => f}
-  %p= submit_tag "Create"
+- if @location
+  %h1== Rota for #{@location.name}
+  - form_for([@location, @rota]) do |f|
+    = render :partial => "form", :locals => {:f => f}
+    %p= submit_tag "Create"
+- elsif @locations
+  %h1 Select a location to create a rota
+  %ul
+    - @locations.each do |location|
+      %li= link_to location.name, new_location_rota_path(location)

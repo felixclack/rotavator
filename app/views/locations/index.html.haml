@@ -1,5 +1,5 @@
 %h1 Listing locations
 
-= render :partial => 'location', :collection => current_objects
+= render :partial => 'location', :collection => @collection
 
-= link_to 'New location', new_object_path 
+= link_to 'New location', new_location_path

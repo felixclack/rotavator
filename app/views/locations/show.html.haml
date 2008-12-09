@@ -1,12 +1,12 @@
 %h1 Viewing location
 
-%div[current_object]
+%div[@object]
   %p.name
     %strong Name
-    = h current_object.name
+    = h @object.name
 
-= link_to 'Edit', edit_object_path
+= link_to 'Edit', edit_location_path
 |
-= link_to 'Destroy', object_path, :confirm => 'Really destroy location?', :method => :delete
+= link_to 'Destroy', location_path, :confirm => 'Really destroy location?', :method => :delete
 |
-= link_to 'Back', objects_path
+= link_to 'Back', locations_path
