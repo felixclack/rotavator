@@ -23,55 +23,26 @@ require 'digest/sha1'
 require 'basecamp'
 
 class User < ActiveRecord::Base
-  include Authentication
-  include Authentication::ByPassword
-  include Authentication::ByCookieToken
-  include Authorization::AasmRoles
-
-  validates_format_of :name, :with => RE_NAME_OK, :message => MSG_NAME_BAD, :allow_nil => true
-  validates_length_of :name, :maximum => 100
-  validates_presence_of :login
-  validates_length_of :login, :within => 3..100 #r@a.wk
-  validates_uniqueness_of :login, :case_sensitive => false
-  validates_format_of :email, :with => RE_EMAIL_OK, :message => MSG_EMAIL_BAD
+  acts_as_authentic :transition_from_restful_authentication => true, :crypto_provider => Authlogic::CryptoProviders::BCrypt
   
-  # Relationships
   has_and_belongs_to_many :roles
   has_many :participations
   has_many :rotas, :through => :participations
   has_and_belongs_to_many :positions
   has_and_belongs_to_many :locations
 
-  # HACK HACK HACK -- how to do attr_accessible from here?
-  # prevents a user from submitting a crafted form that bypasses activation
-  # anything else you want your user to change should be added here.
   attr_accessible :login, :name, :password, :password_confirmation, :email
-
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  #
-  # uff.  this is really an authorization, not authentication routine.  
-  # We really need a Dispatch Chain here or something.
-  # This will also let us return a human error message.
-  #
-  def self.authenticate(login, password)
-    u = find_in_state :first, :active, :conditions => { :login => login } # need to get the salt
-    u && u.authenticated?(password) ? u : nil
-  end
   
   def self.basecamp_authenticate(login, password)
-    p = Person.new
-    u = find_in_state :first, :active, :conditions => { :login => login } # need to get the salt
+    u = find(:first, :conditions => { :login => login })
     if u.nil?
       if is_waca?(login, password)
         u = User.create!(:login => login, :password => password, :password_confirmation => password)
-        u.register!
-        u.activate!
       end
     end
-    u && u.authenticated?(password) ? u : nil
+    u
   end
   
-  # Check if a user has a role.
   def has_role?(role)
     list ||= self.roles.map(&:name)
     list.include?(role.to_s) || list.include?('admin')
@@ -99,20 +70,14 @@ class User < ActiveRecord::Base
     self.participations.future.assigned
   end
   
-  def is_waca?(login, password)
+  def self.is_waca?(login, password)
     Basecamp.establish_connection!("xcelchurch.seework.com", login, password)
     check_for_project_name("WACA+MEDIA")
   end
   
-  def check_for_project_name(name)
+  def self.check_for_project_name(name)
     b = Basecamp.new
     b.projects.map{|a| a["name"] }.include? name
   end
 
-  protected
-    
-  def make_activation_code
-    self.deleted_at = nil
-    self.activation_code = self.class.make_token
-  end
 end

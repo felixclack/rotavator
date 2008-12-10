@@ -1,8 +1,8 @@
-#RAILS_GEM_VERSION = '2.1.1' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.1.2' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
-
+  config.gem "authlogic"
   config.time_zone = 'London'
   config.action_controller.session = {
     :session_key => '_app_session',

@@ -4,23 +4,15 @@ ActionController::Routing::Routes.draw do |map|
   #map.resources :participations
   map.resources :teams
   map.resources :rotas, :only => [:new]
-  #map.resources :services
+  map.resources :services, :only => [:index]
   map.resources :locations, :has_many => [:services, :rotas]
- 
-  # Restful Authentication Rewrites
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  map.login '/login', :controller => 'sessions', :action => 'new'
-  map.register '/register', :controller => 'users', :action => 'create'
-  map.signup '/signup', :controller => 'users', :action => 'new'
-  map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate', :activation_code => nil
-  map.forgot_password '/forgot_password', :controller => 'passwords', :action => 'new'
-  map.change_password '/change_password/:reset_code', :controller => 'passwords', :action => 'reset'
-  
-  # Restful Authentication Resources
+  map.resource :user_session
+  map.root :controller => "user_sessions", :action => "new"
+  map.resource :account, :controller => "users"
   map.resources :users, :has_many => [:participations, :rotas, :locations, :positions]
-  map.resources :passwords
-  map.resource :session
+  map.login "login", :controller => "user_sessions", :action => "new"
+  map.logout "logout", :controller => "user_sessions", :action => "destroy"
   
   # Home Page
-  map.root :controller => 'pages', :action => 'dashboard'
+  map.dashboard "/dashboard", :controller => 'pages', :action => 'dashboard'
 end

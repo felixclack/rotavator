@@ -1,5 +1,11 @@
-%h1 Listing services
+- if @location
+  %h1 Listing services
 
-= render :partial => 'service', :collection => @services
+  = render :partial => 'service', :collection => @collection
 
-= link_to 'New service', new_location_service_path(@location)
+  = link_to 'New service', new_location_service_path(@location)
+- else
+  %h1 Select a location
+  %ul
+  - @locations.each do |location|
+    %li= link_to location.name, location_services_path(location)

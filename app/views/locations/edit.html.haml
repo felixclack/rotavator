@@ -2,10 +2,10 @@
 
 = error_messages_for :location
 
-- form_for(:location, :url => object_url, :html => { :method => :put }) do |f|
+- form_for(@location, :html => { :method => :put }) do |f|
   = render :partial => "form", :locals => {:f => f}
-  %p= submit_tag "Update"
-
-= link_to 'Show', object_path
-|
-= link_to 'Back', objects_path
+  %p
+    = submit_tag "Update"
+    or
+    = link_to "Cancel", locations_path
+  
