@@ -1,22 +1,24 @@
 # == Schema Information
-# Schema version: 20081003121500
+# Schema version: 20081212154123
 #
 # Table name: users
 #
-#  id                        :integer(11)     not null, primary key
-#  name                      :string(100)     default("")
-#  email                     :string(100)
-#  crypted_password          :string(40)
-#  salt                      :string(40)
-#  remember_token            :string(40)
-#  activation_code           :string(40)
-#  state                     :string(255)     default("passive")
-#  remember_token_expires_at :datetime
-#  activated_at              :datetime
-#  deleted_at                :datetime
-#  created_at                :datetime
-#  updated_at                :datetime
-#  login                     :string(255)
+#  id                  :integer(4)      not null, primary key
+#  login               :string(255)     default(""), not null
+#  crypted_password    :string(255)     default(""), not null
+#  password_salt       :string(255)     default(""), not null
+#  persistence_token   :string(255)     default(""), not null
+#  single_access_token :string(255)     default(""), not null
+#  perishable_token    :string(255)     default(""), not null
+#  login_count         :integer(4)      default(0), not null
+#  last_request_at     :datetime
+#  current_login_at    :datetime
+#  last_login_at       :datetime
+#  current_login_ip    :string(255)
+#  last_login_ip       :string(255)
+#  email               :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
 #
 
 require 'digest/sha1'
@@ -27,11 +29,16 @@ class User < ActiveRecord::Base
   
   has_and_belongs_to_many :roles
   has_many :participations
+  has_many :unavailabilities
   has_many :rotas, :through => :participations
   has_and_belongs_to_many :positions
   has_and_belongs_to_many :locations
 
-  attr_accessible :login, :name, :password, :password_confirmation, :email
+  #attr_accessible :login, :name, :password, :password_confirmation, :email
+  
+  def name
+    login
+  end
   
   def self.basecamp_authenticate(login, password)
     u = find(:first, :conditions => { :login => login })
@@ -41,11 +48,6 @@ class User < ActiveRecord::Base
       end
     end
     u
-  end
-  
-  def has_role?(role)
-    list ||= self.roles.map(&:name)
-    list.include?(role.to_s) || list.include?('admin')
   end
   
   def rotas_available_for

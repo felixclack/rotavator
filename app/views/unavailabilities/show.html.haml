@@ -1,0 +1,12 @@
+%h1.overview_h1
+  = title(@user.name.titleize, :span)
+
+#overview-container
+  .overview.overview-top-left
+    %p.login
+      %strong Login:
+      = h @user.login
+
+    %p.email
+      %strong Email:
+      = h @user.email

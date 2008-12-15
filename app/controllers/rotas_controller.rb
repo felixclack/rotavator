@@ -1,11 +1,13 @@
 class RotasController < ApplicationController
-  before_filter :get_location, :except => [:index, :new]
+  before_filter :get_location
   before_filter :get_rota, :only => [:show, :edit, :update, :destroy]
   def index
     if params[:location_id]
       @rotas = Rota.find(:all, :include => [:service => :location], :conditions => ["locations.id = ? AND rotas.id = ?", params[:location_id], params[:id]])
-    else
+    elsif params[:user_id]
       @rotas = current_user.rotas
+    else
+      @rotas = Rota.all
     end
   end
   
@@ -17,6 +19,7 @@ class RotasController < ApplicationController
       get_location
       @rota = Rota.new
       @users = @location.users
+      @formats = Format.all
     else
       @locations = Location.all
     end
@@ -60,7 +63,7 @@ class RotasController < ApplicationController
   
   protected
     def get_location
-      @location = Location.find(params[:location_id])
+      @location = Location.find(params[:location_id]) if params[:location_id]
     end
     
     def get_rota

@@ -1,7 +1,11 @@
-.dashboard
-  %h1 Dashboard
-  
-  #your_details
+%h1.overview_h1
+  .floatr.btn_container
+    %span.btn.btn-medium-white
+      = link_to "Set my un-availability", user_unavailabilities_path(current_user)
+  = title("Overview", :span)
+
+#overview-container
+  .overview.overview-top-left
     .locations
       %h3 Your locations:
       %p= current_user.locations_available_for
@@ -11,32 +15,34 @@
       %p= current_user.positions_available_for
       
   #upcoming_schedule
-    %h2 Your upcoming positions
-    - unless current_user.upcoming_positions.empty?
-      %ul
-        - current_user.upcoming_positions.each do |participation|
-          - row_class = cycle("odd","even")
-          %li{:class=>row_class}
-            %span.date= participation.rota.service.start_at.to_formatted_s(:short)
-            %span.location= h participation.rota.service.location.name
-            %span.position= h participation.position.name
-    - else
+    %h2 Upcoming Positions
+    - if current_user.participations.future.empty?
       %p You have no upcoming positions at the moment.
-      
-  #pending_positions
-    %h2 Your pending positions
-    - unless current_user.pending_positions.empty?
-      %ul
-        - current_user.pending_positions.each do |position|
-          - row_class = cycle("odd","even")
-          %li{:class=>row_class}
-            %span.date= participation.rota.service.start_at.to_formatted_s(:short)
-            %span.location= h participation.rota.service.location.name
-            %span.position= h participation.position.name
     - else
-      %p You have no pending positions at the moment.
-      
-
+      %table
+        - current_user.participations.future.each do |participation|
+          - row_class = cycle("odd","even")
+          %tr{:class=>row_class}
+            %td
+              %span{:class=>participation.state.to_s}= participation.state.to_s.titleize
+            %td.date= participation.rota.service.start_at.to_formatted_s(:short)
+            %td.location= h participation.rota.service.location.name
+            %td.position= h participation.position.name
+            %td.actions= actions_for_participation(participation)
   
-- content_for :context do
-  %h3= current_user.login
+  #unavailability
+    %h2 Un-Availability
+    - if current_user.unavailabilities.future.empty?
+      %p There are currently no dates where you're unavailable. Great.
+    - else
+      %table
+        %thead
+          %tr
+            %th From
+            %th To
+        %tbody
+          - current_user.unavailabilities.future.each do |unavailable|
+            - row_class = cycle("odd","even")
+            %tr{:class=>row_class}
+              %td.from= unavailable.from.to_formatted_s(:short)
+              %td.to= unavailable.to.to_formatted_s(:short)

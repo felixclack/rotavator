@@ -1,0 +1,18 @@
+# == Schema Information
+# Schema version: 20081212154123
+#
+# Table name: teams
+#
+#  id            :integer(4)      not null, primary key
+#  name          :string(255)
+#  basecamp_name :string(255)
+#
+
+one:
+  id: 1
+  name: MyString
+  basecamp_name: MyString
+two:
+  id: 2
+  name: MyString
+  basecamp_name: MyString

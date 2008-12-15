@@ -1,0 +1,29 @@
+%h1.overview_h1
+  = title("Your Un-Availability", :span)
+
+#overview-container
+  .overview.overview-top-left
+    %p.login
+      %strong Login:
+      = h @user.login
+
+    %p.email
+      %strong Email:
+      = h @user.email
+
+  #availability
+    %table.unavailable
+      %thead
+        %tr
+          %th From
+          %th To
+      %tbody
+        - if @collection.empty?
+          %p There are currently no dates where you're unavailable. Great.
+        - else
+          - current_user.unavailabilities.future.each do |unavailable|
+            - row_class = cycle("odd","even")
+            %tr{:class=>row_class}
+              %td.from= unavailable.from.to_formatted_s(:short)
+              %td.to= unavailable.to.to_formatted_s(:short)
+    %p.ajaxlink= link_to "Add an un-availability", new_user_unavailability_path(@user)

@@ -9,13 +9,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081210104955) do
+ActiveRecord::Schema.define(:version => 20081214090133) do
+
+  create_table "formats", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "formats_positions", :id => false, :force => true do |t|
+    t.integer "format_id"
+    t.integer "position_id"
+  end
 
   create_table "locations", :force => true do |t|
     t.string "name"
   end
 
-  create_table "locations_users", :force => true do |t|
+  create_table "locations_users", :id => false, :force => true do |t|
     t.integer "location_id"
     t.integer "user_id"
   end
@@ -41,7 +52,7 @@ ActiveRecord::Schema.define(:version => 20081210104955) do
     t.string "name"
   end
 
-  create_table "positions_users", :force => true do |t|
+  create_table "positions_users", :id => false, :force => true do |t|
     t.integer "position_id"
     t.integer "user_id"
   end
@@ -60,7 +71,10 @@ ActiveRecord::Schema.define(:version => 20081210104955) do
     t.integer  "team_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "format_id"
   end
+
+  add_index "rotas", ["format_id"], :name => "index_rotas_on_format_id"
 
   create_table "services", :force => true do |t|
     t.datetime "start_at"
@@ -80,6 +94,14 @@ ActiveRecord::Schema.define(:version => 20081210104955) do
   create_table "teams", :force => true do |t|
     t.string "name"
     t.string "basecamp_name"
+  end
+
+  create_table "unavailabilities", :force => true do |t|
+    t.datetime "from"
+    t.datetime "to"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

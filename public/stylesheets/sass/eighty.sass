@@ -1,0 +1,93 @@
+#upcoming_schedule
+  table
+    td
+      :font-size 1em
+      :line-height normal
+      :padding 0 1em 0 0
+      :border-bottom 1px dotted #ddd
+      span
+        :display block
+        :width 9em
+        :color #fff
+        :font-size 0.8em
+        :text-transform uppercase
+        :text-align center
+        :margin .2em .5em .2em 0
+        &.assigned
+          :background orange
+        &.confirmed
+          :background green
+        &.declined
+          :background red
+
+.overview
+  .locations, .positions
+    :padding 0 10px
+    h3
+      :font-size 1.2em
+      :margin-bottom 0
+    p
+      :padding 0
+      
+#flash-notice
+  :background green
+  :color #fff
+  :padding 3px 10px
+#flash-warning
+  :background orange
+  :color #fff
+  :padding 3px 10px
+#flash-error
+  :background red
+  :color #fff
+  :padding 3px 10px
+
+
+#errorExplanation
+  :color red
+
+
+.fieldWithErrors
+  label
+    :color red
+  input, select, textarea
+    :border 1px solid red
+  
+form
+  label
+    :display inline-block
+    :width 14em
+    :vertical-align top
+    :margin-top 1em
+    :font-weight bold
+    :text-align right
+    :padding-right 1em
+  input, select, textarea
+    :display inline-block
+    :margin-top 1em
+    
+.availability label
+  :width 6em
+
+.overview-top-left
+  label
+    :width auto
+  h3
+    :padding-left 1em
+
+.rota-details
+  :display none
+
+body.public
+  #content #main
+    :width 100%
+    :padding 0
+  #login-box
+    :width 40em
+    :margin 10em auto 0
+    :background #eee
+    :padding 1em 3em
+    :border 1em solid #333
+    .buttons
+      :text-align right
+      :width auto

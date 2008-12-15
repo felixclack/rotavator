@@ -1,8 +1,21 @@
-%h1 My Rotas
+- if params[:user_id]
+  %h1 My Rotas
 
-- if @rotas.empty?
-  %p You haven't been assigned to any rotas at the moment.
+  - if @rotas.empty?
+    %p You haven't been assigned to any rotas at the moment.
+  - else
+    = render @rotas
+
+- elsif params[:location_id]
+  %h1== Rotas for #{@location.name}
+  
+  - if @rotas.empty?
+    %p No rotas assigned to this location currently.
+  - else
+    = render @rotas
+    
+  = link_to 'New rota', new_location_rota_path
+  
 - else
-  = render :partial => 'rota', :collection => @rotas
-
-= link_to 'New rota', new_location_rota_path if params[:location_id]
+  %h1 All rotas
+  = render @rotas

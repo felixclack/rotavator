@@ -1,10 +1,8 @@
-%div[service]
-  %p.start_at
-    %strong Start at
-    = h service.start_at
-
-  = link_to 'Show', location_service_path(@location, service)
-  |
-  = link_to 'Edit', edit_location_service_path(@location, service)
-  |
-  = link_to 'Delete', location_service_path(@location, service), :confirm => 'Really delete service?', :method => :delete
+%tr[service]
+  %td
+    %span.start_at= h service.start_at
+    
+  %td
+    = link_to "rota", location_rota_path(@location, service.rotas.first) unless service.rotas.first.nil?
+  
+  %td= link_to 'Delete', location_service_path(@location, service), :confirm => 'Really delete service?', :method => :delete

@@ -1,0 +1,3 @@
+%ul
+  %li{:class=>"#{'selected' if params[:action] == 'index'}"}= link_to "Overview", users_path
+  %li{:class=>"#{'selected' if params[:action] == 'new'}"}= link_to "Add new person", new_user_path

@@ -1,0 +1,3 @@
+%ul
+  - Location.all.each do |location|
+    %li{:class=>"#{'selected' if params[:location_id].to_i == location.id}"}= link_to location.name, new_location_rota_path(location)

@@ -4,6 +4,8 @@ class LocationsController < ApplicationController
   
   update.wants.html { redirect_to locations_path }
   
+  show.wants.js { render :template => "/locations/show.html.haml" }
+  
   private
     def collection
       if params[:user_id]

@@ -1,6 +1,6 @@
 class ParticipationsController < ApplicationController
-  before_filter :get_user
-  before_filter :get_participation, :only => [:show, :edit, :update, :destroy]
+  before_filter :get_user, :except => [:confirm, :decline]
+  before_filter :get_participation, :only => [:show, :edit, :update, :destroy, :confirm, :decline]
   def index
     @participations = @user.participations.future.all
   end
@@ -48,13 +48,34 @@ class ParticipationsController < ApplicationController
     end
   end
   
+  def confirm
+    @participation.confirm!
+    flash[:notice] = "Position confirmed"
+    respond_to do |wants|
+      wants.html { redirect_to dashboard_path }
+    end
+  end
+  
+  def decline
+    @participation.decline!
+    flash[:notice] = "Position declined"
+    respond_to do |wants|
+      wants.html { redirect_to dashboard_path }
+    end
+  end
+  
   protected
     def get_user
       @user = User.find(params[:user_id])
     end
     
     def get_participation
-      @participation = @user.participations.find(params[:id])
+      if @user
+        @participation ||= @user.participations.find(params[:id])
+      else
+        @participation ||= Participation.find(params[:id])
+      end
+      
     end
   
 end

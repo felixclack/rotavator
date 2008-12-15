@@ -1,12 +1,6 @@
 %h1 Viewing position
 
-%div[current_object]
+%div[@object]
   %p.name
     %strong Name
-    = h current_object.name
-
-= link_to 'Edit', edit_object_path
-|
-= link_to 'Destroy', object_path, :confirm => 'Really destroy position?', :method => :delete
-|
-= link_to 'Back', objects_path
+    = h @object.name

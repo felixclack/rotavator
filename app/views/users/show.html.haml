@@ -1,24 +1,28 @@
-%div[@user]
-  %h1= h @user.name
+%h1.overview_h1
+  .floatr.btn_container
+    %span.btn.btn-medium-white= link_to "Set my un-availability", user_unavailabilities_path(current_user) unless params[:action] == "show" && current_user.id == params[:id]
+    %span.btn.btn-medium-white= link_to "Edit", edit_user_path(@user)
+    %span.btn.btn-medium-white= link_to "Delete", user_path(@user), :confirm => "Are you sure?", :method => :delete
+  = title(@user.name.titleize, :span)
 
-  %p.login
-    %strong Login:
-    = h @user.login
+#overview-container
+  .overview.overview-top-left
+    %p.login
+      %strong Login:
+      = h @user.login
   
-  %p.email
-    %strong Email:
-    = h @user.email
+    %p.email
+      %strong Email:
+      = h @user.email
   
-  - if @user.locations
-    %p.locations
-      Locations:
-      - @user.locations.each do |location|
-        = link_to location.name, location_path(location)
+    - if @user.locations
+      %p.locations
+        Locations:
+        - @user.locations.each do |location|
+          = link_to location.name, location_path(location), :rel => "facebox"
 
-  - if @user.positions
-    %p.positions
-      Positions:
-      = @user.positions.map{|p| p.name}.join(", ")
-
-= link_to "Edit", edit_user_path
-= link_to "Delete", user_path, :confirm => "Are you sure?", :method => :delete
+    - if @user.positions
+      %p.positions
+        Positions:
+        - @user.positions.each do |position|
+          = link_to position.name, position_path(position), :rel => "facebox"

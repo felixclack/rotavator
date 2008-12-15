@@ -1,11 +1,23 @@
-%p
-  = f.label :service_id, "Service"
-  - if @location.services.future.empty?
-    = link_to "Create new service", new_location_service_path(@location)
+.overview.overview-top-left
+  %h3 Service details
+  %p
+    = f.label :service_id, "Service"
+    - if @location.services.future.empty?
+      = link_to "Create new service", new_location_service_path(@location)
+    - else
+      = f.collection_select :service_id, @location.services.future.all, :id, :start_at
+  - if @formats.empty?
+    %p There are currently no saved formats.
   - else
-    = f.collection_select :service_id, @location.services.future.all, :id, :start_at
+    %p
+      = f.label :format_id, "Format"
+      = f.collection_select :format_id, @formats, :id, :name
+  = link_to "Create a new format", new_format_path, :rel => "facebox"
+    
+.rota-details
+  #participations
+    = f.render_associated_form(@rota.participations) unless @rota.participations.empty?
 
-#participations
-  = f.render_associated_form(@rota.participations) unless @rota.participations.empty?
-
-= f.add_associated_link "Add person", @rota.participations.build
+  = f.add_associated_link "Add person", @rota.participations.build
+  
+  %p= submit_tag "Create"

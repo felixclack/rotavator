@@ -103,6 +103,25 @@ h3 {
     background: #999;
     padding: 1em 1em 1em 2%;
     color: #000; }
+  #content #upcoming_schedule table td {
+    font-size: 1.2em;
+    line-height: normal;
+    padding: 0 1em 0 0; }
+    #content #upcoming_schedule table td span {
+      display: block;
+      width: 9em;
+      color: #fff;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      text-align: center;
+      font-weight: bold;
+      margin: .2em .5em .2em 0; }
+      #content #upcoming_schedule table td span.assigned {
+        background: orange; }
+      #content #upcoming_schedule table td span.confirmed {
+        background: green; }
+      #content #upcoming_schedule table td span.declined {
+        background: red; }
 
 /* === FLASH MESSAGES === */ */
 #flash-notice {

@@ -1,10 +1,14 @@
 = error_messages_for :rota
 
 - if @location
-  %h1== Rota for #{@location.name}
-  - form_for([@location, @rota]) do |f|
-    = render :partial => "form", :locals => {:f => f}
-    %p= submit_tag "Create"
+  %h1.overview_h1
+    .floatr.btn_container
+      %span.btn.btn-medium-white= link_to "Cancel", dashboard_path
+    = title(@location.name.titleize, :span)
+    
+  #overview-container
+    - form_for([@location, @rota]) do |f|
+      = render :partial => "form", :locals => {:f => f}
 - elsif @locations
   %h1 Select a location to create a rota
   %ul

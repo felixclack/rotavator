@@ -1,7 +1,11 @@
 - if @location
-  %h1 Listing services
+  = title("Upcoming Services at #{@location.name}", :h1)
 
-  = render :partial => 'service', :collection => @collection
+  - if @collection.empty?
+    %p No services yet.
+  - else
+    %table
+      = render :partial => 'service', :collection => @collection
 
   = link_to 'New service', new_location_service_path(@location)
 - else

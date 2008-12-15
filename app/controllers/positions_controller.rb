@@ -1,6 +1,8 @@
 class PositionsController < ApplicationController
   resource_controller
-  belongs_to :user
+  belongs_to :user, :format
+  
+  show.wants.js { render :template => "/positions/show.html.haml"}
   
   private
     def collection

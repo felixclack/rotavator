@@ -1,0 +1,16 @@
+%h1.overview_h1
+  = title("Your Un-Availability", :span)
+
+#overview-container
+  .overview.overview-top-left
+    %p.login
+      %strong Login:
+      = h @user.login
+
+    %p.email
+      %strong Email:
+      = h @user.email
+  .availability
+    - form_for([current_user, @unavailability]) do |form|
+      = render :partial => "form", :locals => {:form => form}
+      = form.submit "Save"

@@ -2,6 +2,6 @@
 
 = error_messages_for :rota
 
-- form_for(:rota, :url => location_rota_url(@location, @rota), :html => { :method => :put }) do |f|
+- form_for([@location, @rota], :html => { :method => :put }) do |f|
   = render :partial => "form", :locals => {:f => f}
   %p= submit_tag "Update"

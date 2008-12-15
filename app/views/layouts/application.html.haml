@@ -1,47 +1,54 @@
 !!! XML
 !!!
-%html
-  %head
-    %title= @page_title || APP_CONFIG[:site_name]
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+%head
+  %link{:rel=>"shortcut icon", :href=>"/favicon.ico", :type=>"image/x-icon"}
+  
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  %title= @page_title
+  
+  = stylesheet_link_tag "app", "facebox", "eighty"
+  = javascript_include_tag "jquery", "jquery-ui", "facebox", :defaults
+  
+%body{:class=>@page_class}
+  #company_header
+    %span.floatr
+      Logged in as
+      = link_to current_user.name, edit_user_path(current_user)
+      == (#{link_to("Logout", logout_path)})
+    WACA
+
+  #main_tab
+    %span#helplink= link_to("Help", "#help", :rel => "facebox")
+
+    %ul
+      %li{:id=>"#{'current' if @page_class == 'dashboard'}"}= link_to("Dashboard", dashboard_path)
+      %li{:id=>"#{'current' if params[:controller] == 'users'}"}= link_to "People", users_path
+      %li{:id=>"#{'current' if params[:controller] == 'services'}"}= link_to "Services", services_path
+      %li{:id=>"#{'current' if params[:controller] == 'locations'}"}= link_to "Locations", locations_path
+      %li{:id=>"#{'current' if params[:controller] == 'rotas' && params[:action] == 'new'}"}= link_to "Create new rota", new_rota_path
+  
+  .container
+    #subtab
+      = render :partial => "sub_menu"
+
+    #mainbody
+      = flash_messages
+      = yield :layout
+
+  #footer
+    #credit
+      = link_to "Powered by TheRotavator", "#"
     
-    <meta http-equiv="content-type" content="text/xhtml; charset=utf-8" />
-    <meta http-equiv="imagetoolbar" content="no" />
-    <meta name="distribution" content="all" />
-    <meta name="robots" content="all" />	
-    <meta name="resource-type" content="document" />
-    <meta name="MSSmartTagsPreventParsing" content="true" />
-    
-    = stylesheet_link_tag 'reset', 'base'
-    = javascript_include_tag "jquery", "jquery-ui", :defaults
-    
-  %body
-    #container
-      #header
-        #account
-          %h1 Rotavator
-          %ul
-            - if logged_in?
-              %li= link_to 'My account', user_path(current_user)
-              %li= link_to 'Logout', logout_path
-            - else
-              %li= link_to 'Login', login_path
-        
-        %h2 WACA
-        #nav
-          %ul
-            %li= link_to "Dashboard", dashboard_path
-            %li= link_to "My positions", user_positions_path(@current_user)
-            %li= link_to "My rotas", user_rotas_path(@current_user)
-            %li= link_to "My locations", user_locations_path(@current_user)
-            %li= link_to "Create new rota", new_rota_path
-            %li= link_to "People", users_path
-            %li= link_to "Locations", locations_path
-            %li= link_to "Services", services_path
-      
-      #content
-        #main
-          = flash_messages
-          = yield :layout
-        
-        #context
-          = yield :context
+#help{:style=>"display:none"}
+  .tipcontent
+    %h3 Welcome to Rotavator!
+    %p 
+      Help dialogs like this one will appear throughout Rotavator to help
+      you use your account.  You can turn help dialogs off at any time by clicking on the "Close" link
+      at the bottom-right corner of the tips.  You can always re-show the tips by clicking on "Help" where available.
+
+    %p
+      This is the main 
+      %strong Overview page
+      This is your account's "home base" where you can easily see your next rostered positions and any dates coming up where you're unavailable to serve.

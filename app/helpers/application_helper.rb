@@ -17,4 +17,23 @@ module ApplicationHelper
     messages
   end
   
+  def actions_for_participation(participation)
+    raise "Not a participation" unless participation.is_a? Participation
+    case participation.state.to_sym
+    when :assigned
+      haml_tag :div do
+        puts link_to("Confirm", confirm_participation_path(participation), :method => :put)
+        puts link_to("Decline", decline_participation_path(participation), :method => :put)
+      end
+    when :confirmed
+      haml_tag :div do
+        puts link_to("Decline", decline_participation_path(participation), :method => :put)
+      end
+    when :declined
+      haml_tag :div do
+        puts link_to("I am available", confirm_participation_path(participation), :method => :put)
+      end
+    end
+  end
+  
 end

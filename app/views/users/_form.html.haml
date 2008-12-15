@@ -1,27 +1,26 @@
-%p
-  = f.label :name
-  = f.text_field :name
+- if form.object.new_record?
+  %p
+    = form.label :login
+    = form.text_field :login
+  %p
+    = form.label :password, form.object.new_record? ? nil : "Change password"
+    = form.password_field :password
+
+  %p
+    = form.label :password_confirmation
+    = form.password_field :password_confirmation
+
+- else
+  %h2= @user.login
   
 %p
-  = f.label :login
-  = f.text_field :login
+  = form.label :email
+  = form.text_field :email
+  
+%p
+  = form.label :location_ids, "Locations"
+  = form.collection_select :location_ids, Location.all, :id, :name, {}, :multiple => true
 
 %p
-  = f.label :email
-  = f.text_field :email
-  
-%p
-  = f.label :password
-  = f.text_field :password
-
-%p
-  = f.label :password_confirmation
-  = f.text_field :password_confirmation
-  
-%p
-  = label :locations, :location_ids, "Locations"
-  = collection_select "locations", "location_ids", Location.all, :id, :name, {}, :multiple => true
-  
-%p
-  = label :positions, :position_ids, "Positions"
-  = collection_select "positions", "position_ids", Position.all, :id, :name, {}, :multiple => true
+  = form.label :position_ids, "Positions"
+  = form.collection_select :position_ids, Position.all, :id, :name, {}, :multiple => true

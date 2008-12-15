@@ -1,13 +1,13 @@
 # == Schema Information
-# Schema version: 20081003121500
+# Schema version: 20081212154123
 #
 # Table name: participations
 #
-#  id          :integer(11)     not null, primary key
+#  id          :integer(4)      not null, primary key
 #  state       :string(255)
-#  user_id     :integer(11)
-#  rota_id     :integer(11)
-#  position_id :integer(11)
+#  user_id     :integer(4)
+#  rota_id     :integer(4)
+#  position_id :integer(4)
 #  created_at  :datetime
 #  updated_at  :datetime
 #

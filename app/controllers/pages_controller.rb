@@ -7,6 +7,9 @@ class PagesController < ApplicationController
   end
   
   def dashboard
+    @page_class = "dashboard"
   end
+  
+  
   
 end
