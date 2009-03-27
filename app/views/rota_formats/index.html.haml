@@ -1,0 +1,13 @@
+%h1.overview_h1= title("Rota Formats", :span)
+
+#overview-container
+  
+  #formats
+    %h2 Current Rota Formats
+    - if @collection.nil? or @collection.empty?
+      %p There are currently no formats set up yet.
+    - else
+      = render :partial => "rota_format", :collection => @collection
+    %h3 
+      Go on, be daring... 
+      = link_to "create a new rota format", new_object_path

@@ -1,0 +1,7 @@
+- fields_for(@location) do |services|
+  %h3 Services
+  %p
+    = services.label :service_id, "Service"
+    = services.collection_select :service_id, location.services.future, :id, :start_at, {}, {:include_blank => true}
+  %p
+    = link_to "Add new service", new_location_service_path(location), :class => "ajax"

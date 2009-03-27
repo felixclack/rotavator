@@ -1,0 +1,14 @@
+- form_for(@rota_format) do |f|
+  = error_messages_for :format
+  %p
+    = f.label :name
+    = f.text_field :name
+    
+  %p
+    = f.label :position_ids, "Required Positions"
+    = f.collection_select :position_ids, Position.all, :id, :name, {}, :multiple => true
+  
+  %p
+    = submit_tag "Save"
+    or
+    = link_to "Cancel", rotas_path

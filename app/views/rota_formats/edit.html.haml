@@ -1,0 +1,8 @@
+%h1.overview_h1
+  .floatr.btn_container
+    %span.btn.btn-medium-white= link_to "Edit", edit_object_path
+    %span.btn.btn-medium-white= link_to "New format", new_object_path
+  = title("Rota Format", :span)
+
+#overview-container
+  = render :partial => "form"

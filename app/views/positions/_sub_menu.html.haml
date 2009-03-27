@@ -1,0 +1,5 @@
+%ul
+  %li= link_to "Overview", dashboard_path
+  - if @user
+    %li.selected= link_to "My Roles", user_positions_path(@user)
+    %li= link_to "My Locations", user_locations_path(@user)

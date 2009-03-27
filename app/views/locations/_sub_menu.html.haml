@@ -1,0 +1,8 @@
+- if @user
+  - @page_class = "dashboard"
+  = render :partial => "pages/sub_menu"
+- else
+  %ul
+    %li{:class=>"#{'selected' unless params[:id]}"}= link_to "Overview", locations_path
+    - Location.all.each do |location|
+      %li{:class=>"#{'selected' if params[:id].to_i == location.id}"}= link_to location.name, location

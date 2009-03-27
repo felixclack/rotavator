@@ -1,0 +1,21 @@
+%h1.overview_h1
+  .floatr.btn_container
+    %span.btn.btn-medium-white
+      = link_to "Create a new location", new_position_path
+  = title("Add to location", :span)
+
+#overview-container
+  #locations
+    %h2 Current locations
+    - if @user.locations.empty?
+      %p== #{@user.name} is not linked to any locations yet.
+    - else
+      %p.locations
+        - @user.locations.each do |location|
+          = link_to location.name, location, :rel => "facebox"
+          
+    %h2== Link a location to #{@user.name}
+    - form_for([@user]) do |f|
+      = error_messages_for :user
+      %p= f.collection_select :location_ids, Location.all, :id, :name, {}, {:multiple => true, :include_blank => false}
+      %p= submit_tag "Add"

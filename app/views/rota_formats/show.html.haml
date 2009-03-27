@@ -1,0 +1,20 @@
+%h1.overview_h1
+  .floatr.btn_container
+    %span.btn.btn-medium-white= link_to "Edit", edit_object_path
+    %span.btn.btn-medium-white= link_to "Delete", rota_format_path(@rota_format), :method => :delete
+    %span.btn.btn-medium-white= link_to "New format", new_object_path
+  = title("Rota Format", :span)
+
+#overview-container
+  %h2= @rota_format.name
+  %h4 Required roles
+  - if @rota_format.positions.empty?
+    %p 
+      There are no required roles for this format. 
+      Do you want to
+      = link_to "add some?", edit_object_path
+  - else
+    %ul
+      - @rota_format.positions.each do |position|
+        %li= link_to position.name, position, :rel => "facebox"
+        
