@@ -1,3 +1,12 @@
-%h1 Positions I can fill
+%h1 Roles I can fill
 
-= render :partial => 'position', :collection => @collection
+- if @collection.empty?
+  %p There are no roles linked to you at the moment.
+- else
+  = render :partial => 'position', :collection => @collection
+%h3
+  Hey, why not add a role to this user?
+  = link_to "Add a role", add_position_user_path(current_user), :rel => "facebox"
+
+  
+- @page_class = "dashboard"

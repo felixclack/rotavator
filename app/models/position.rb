@@ -9,6 +9,7 @@
 
 class Position < ActiveRecord::Base
   has_and_belongs_to_many :users
-  has_and_belongs_to_many :formats
+  has_and_belongs_to_many :rota_formats
   has_many :participations
+
 end

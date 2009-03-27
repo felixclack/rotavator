@@ -1,72 +1,56 @@
 class RotasController < ApplicationController
-  before_filter :get_location
-  before_filter :get_rota, :only => [:show, :edit, :update, :destroy]
-  def index
-    if params[:location_id]
-      @rotas = Rota.find(:all, :include => [:service => :location], :conditions => ["locations.id = ? AND rotas.id = ?", params[:location_id], params[:id]])
-    elsif params[:user_id]
-      @rotas = current_user.rotas
-    else
-      @rotas = Rota.all
-    end
-  end
+  resource_controller
+  belongs_to :location, :service, :rota_format
   
-  def show
-  end
-  
-  def new
-    if params[:location_id]
-      get_location
-      @rota = Rota.new
-      @users = @location.users
-      @formats = Format.all
+  new_action.before do
+    @rota_formats = RotaFormat.all
+    if @location
+      @users ||= @location.users
+      @services = @location.services.future.all
     else
       @locations = Location.all
     end
+    @rota_format = RotaFormat.find(params[:rota_format_id]) if params[:rota_format_id]
+    @service = Service.find(params[:service_id]) if params[:service_id]
+    @location ||= @service.location if @service
+    @rota ||= Rota.new
+    if @rota_format
+      @rota_format.positions.each do |position|
+        @rota.participations.build(:position => position)
+      end
+    end
   end
   
-  def create
-    @rota = Rota.new(params[:rota])
-    @rota.team = Team.first
-    if @rota.save
-      flash[:notice] = "Created a new rota"
-      redirect_to location_rota_path(@location, @rota)
+  edit.before do
+    @rota_formats = RotaFormat.all
+    if @location
+      @users ||= @location.users
+      @services = @location.services.future.all
     else
-      flash[:error] = "There was an error."
-      render :action => "new"
+      @locations = Location.all
+    end
+    @rota_format = RotaFormat.find(params[:rota_format_id]) if params[:rota_format_id]
+    @rota = Rota.find(params[:id])
+    @service = @rota.service
+  end
+  
+  create.wants.html do 
+    redirect_to location_rotas_path(@location)
+  end
+  
+  def display_format
+    @rota_format = RotaFormat.find(params[:format_id])
+    respond_to do |wants|
+      wants.js
     end
   end
   
-  def edit
-    @users = @location.users
-  end
-  
-  def update
-    if @rota.update_attributes(params[:rota])
-      flash[:notice] = "Updated the rota."
-      redirect_to location_rota_path(@location, @rota)
-    else
-      flash[:error] = "Failed to update the rota."
-      render :action => "edit"
-    end
-  end
-  
-  def destroy
-    if @rota.destroy
-      flash[:notice] = "Rota deleted."
-      redirect_to location_rotas_path(@location)
-    else
-      flash[:error] = "Failed to delete service."
-      redirect_to location_rota_path(@location, @rota)
-    end
-  end
-  
-  protected
-    def get_location
-      @location = Location.find(params[:location_id]) if params[:location_id]
-    end
-    
-    def get_rota
-      @rota = Rota.find(:first, :include => [:service => :location], :conditions => ["locations.id = ? AND rotas.id = ?", params[:location_id], params[:id]])
+  private
+    def collection
+      if @location
+        @collection ||= @location.services.future.all
+      else
+        @collection ||= Rota.future.all
+      end
     end
 end

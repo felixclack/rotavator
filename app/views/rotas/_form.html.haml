@@ -1,23 +1,26 @@
 .overview.overview-top-left
   %h3 Service details
   %p
-    = f.label :service_id, "Service"
-    - if @location.services.future.empty?
-      = link_to "Create new service", new_location_service_path(@location)
-    - else
-      = f.collection_select :service_id, @location.services.future.all, :id, :start_at
-  - if @formats.empty?
-    %p There are currently no saved formats.
+    %strong Service Start:
+    = @service.start_at.to_formatted_s(:short)
+    
+  - if @rota_format
+    %p== Rota format is #{@rota_format.name}
+
   - else
-    %p
-      = f.label :format_id, "Format"
-      = f.collection_select :format_id, @formats, :id, :name
-  = link_to "Create a new format", new_format_path, :rel => "facebox"
+  
+    - if @rota_formats.empty?
+      %p There are currently no saved rota formats.
+    - else
+      %ul
+        - @rota_formats.each do |rota_format|
+          %li= link_to rota_format.name, new_service_rota_format_rota_path(@service, rota_format)
+        
+    = link_to "Create a new rota format", new_rota_format_path, :rel => "facebox"
     
 .rota-details
+  %h2 Rota
   #participations
     = f.render_associated_form(@rota.participations) unless @rota.participations.empty?
 
-  = f.add_associated_link "Add person", @rota.participations.build
-  
-  %p= submit_tag "Create"
+  //= f.add_associated_link "Add position", @rota.participations.build

@@ -9,13 +9,13 @@
 - elsif params[:location_id]
   %h1== Rotas for #{@location.name}
   
-  - if @rotas.empty?
+  - if @collection.nil? or @collection.empty?
     %p No rotas assigned to this location currently.
   - else
-    = render @rotas
+    = render :partial => "service", :collection => @collection
     
   = link_to 'New rota', new_location_rota_path
   
 - else
   %h1 All rotas
-  = render @rotas
+  = render @collection

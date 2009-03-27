@@ -10,6 +10,8 @@ class ServicesController < ApplicationController
     end
   end
   
+  show.wants.js
+  
   create.wants.html { redirect_to location_services_path(@location) }
   
   private

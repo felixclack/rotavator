@@ -5,12 +5,22 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :participations, :only => [:confirm, :decline], :member => {:confirm => :put, :decline => :put}
   map.resources :teams
   map.resources :rotas, :only => [:index, :new]
-  map.resources :services, :only => [:index]
-  map.resources :locations, :has_many => [:services, :rotas]
-  map.resources :formats, :has_many => [:positions, :rotas]
+  map.resources :services do |service|
+    service.resources :rota_format do |rota_format|
+      rota_format.resources :rotas
+    end
+  end
+    
+  map.resources :locations do |location|
+    location.resources :rotas
+    location.resources :services do |service|
+      service.resources :rotas
+    end
+  end
+  map.resources :rota_formats, :has_many => [:positions, :rotas]
   map.resource :user_session
   map.resource :account, :controller => "users"
-  map.resources :users, :has_many => [:participations, :rotas, :locations, :positions, :unavailabilities]
+  map.resources :users, :has_many => [:participations, :rotas, :locations, :positions, :unavailabilities], :member => [:add_position, :add_location]
   map.login "login", :controller => "user_sessions", :action => "new"
   map.logout "logout", :controller => "user_sessions", :action => "destroy"
   

@@ -20,7 +20,12 @@ jQuery.fn.ajaxLink = function() {
 };
 
 jQuery(document).ready(function($) {
-  $('a[rel*=facebox]').facebox();
-  $("a.ajaxlink").ajaxLink();
+  $('a[rel*=facebox]').facebox()
+  $("a.ajaxlink").ajaxLink()
+  
+  $("#locations select").live("change", function() {
+    var target = "/locations/" + $(this).attr("value") + "/services"
+    $('#services').load(target, null, "script")
+  })
   
 });

@@ -1,5 +1,5 @@
 - form_for([current_user, @unavailability]) do |form|
-  %tr{:class=>row_class}
+  %tr
     %td.from= form.datetime_select :from
     %td.to= form.datetime_select :to
     %td.action = form.submit "Save"

@@ -6,6 +6,11 @@ class LocationsController < ApplicationController
   
   show.wants.js { render :template => "/locations/show.html.haml" }
   
+  index.before do
+    #@page_class = "dashboard" if params[:user_id]
+    @services = Service.future.all
+  end
+  
   private
     def collection
       if params[:user_id]

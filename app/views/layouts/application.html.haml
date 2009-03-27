@@ -25,7 +25,7 @@
       %li{:id=>"#{'current' if @page_class == 'dashboard'}"}= link_to("Dashboard", dashboard_path)
       %li{:id=>"#{'current' if params[:controller] == 'users'}"}= link_to "People", users_path
       %li{:id=>"#{'current' if params[:controller] == 'services'}"}= link_to "Services", services_path
-      %li{:id=>"#{'current' if params[:controller] == 'locations'}"}= link_to "Locations", locations_path
+      %li{:id=>"#{'current' if params[:controller] == 'locations' && !@user}"}= link_to "Locations", locations_path
       %li{:id=>"#{'current' if params[:controller] == 'rotas' && params[:action] == 'new'}"}= link_to "Create new rota", new_rota_path
   
   .container

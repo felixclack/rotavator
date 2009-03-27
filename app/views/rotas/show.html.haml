@@ -1,14 +1,15 @@
 %div[@rota]
-  = title("#{@rota.team.name} rota for #{@rota.service.location.name} #{@rota.service.start_at.to_s} service", :h1)
+  = title("#{@rota.team.try(:name)} rota for #{@rota.service.location.try(:name)} #{@rota.service.start_at.to_s} service", :h1)
   - if @rota.participations.empty?
     %p Nobody has been assigned to this rota yet.
   - else
     %table
       - @rota.participations.each do |participation|
-        %td= participation.position.try(:name)
-        %td= participation.user.try(:name)
-        %td
-          %span{:class=>participation.state.to_s}= participation.state.to_s.titleize
+        %tr
+          %td= participation.position.try(:name)
+          %td= participation.user.try(:name)
+          %td
+            %span{:class=>participation.state.to_s}= participation.state.to_s.titleize
         
 
   = link_to 'Edit', edit_location_rota_path(@location, @rota)

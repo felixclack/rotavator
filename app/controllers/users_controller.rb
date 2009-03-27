@@ -28,11 +28,25 @@ class UsersController < ApplicationController
 
   def edit
   end
+  
+  def add_position
+    respond_to do |wants|
+      wants.html
+      wants.js { render :template => "users/add_position.html.haml" }
+    end
+  end
+  
+  def add_location
+    respond_to do |wants|
+      wants.html
+      wants.js { render :template => "users/add_location.html.haml" }
+    end
+  end
 
   def update
     if @user.update_attributes(params[:user])
       flash[:notice] = "Account updated!"
-      redirect_to users_path
+      redirect_to @user
     else
       render :action => :edit
     end

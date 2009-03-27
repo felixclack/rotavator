@@ -1,3 +1,4 @@
 %ul
-  %li.selected= link_to "Overview", "#overview"
-  %li= link_to "Upcoming positions", "#upcoming_positions"
+  %li.selected= link_to "Overview"
+  %li= link_to "My Roles", user_positions_path(@user)
+  %li= link_to "My Locations", user_locations_path(@user)

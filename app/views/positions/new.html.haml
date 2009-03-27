@@ -1,9 +1,37 @@
-%h1 Creating position
+%h1.overview_h1
+  .floatr.btn_container
+    %span.btn.btn-medium-white
+      = link_to "Create a new position", new_position_path
+  = title("Add a position", :span)
 
-= error_messages_for :position
+#overview-container
+  .overview.overview-top-left
+    %h3
+      %span Name:
+      = @user.name
+    %h3
+      %span Email:
+      = @user.email
 
-- form_for(:position, :url => objects_url) do |f|
-  = render :partial => "form", :locals => {:f => f}
-  %p= submit_tag "Create"
-
-= link_to 'Back', objects_path
+  #position
+    %h2 Current positions
+    - if @user.positions.empty?
+      %p== #{@user.name} is not linked to any positions yet.
+    - else
+      %p.positions
+        - @user.positions.each do |position|
+          = link_to position.name, position_path(position), :rel => "facebox"
+          
+    %h2== Link a position to #{@user.name}
+    - if params[:user_id]
+      - form_for([@user]) do |f|
+        = error_messages_for :position
+        %p= f.collection_select :position_ids, Position.all, :id, :name
+        %p= submit_tag "Add"
+    
+    - else
+      - form_for(@position) do |f|
+        = error_messages_for :position
+        = render :partial => "form", :locals => {:f => f}
+        %p= submit_tag "Create"
+  

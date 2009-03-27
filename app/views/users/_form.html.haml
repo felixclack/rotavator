@@ -12,10 +12,23 @@
 
 - else
   %h2= @user.login
+
+%p
+  = form.label :first_name
+  = form.text_field :first_name
+
+%p
+  = form.label :surname
+  = form.text_field :surname
+
   
 %p
   = form.label :email
   = form.text_field :email
+    
+%p
+  = form.label :phone
+  = form.text_field :phone
   
 %p
   = form.label :location_ids, "Locations"

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20081212154123
+# Schema version: 20090325162553
 #
 # Table name: users
 #
@@ -19,13 +19,16 @@
 #  email               :string(255)
 #  created_at          :datetime
 #  updated_at          :datetime
+#  first_name          :string(255)
+#  surname             :string(255)
+#  phone               :string(255)
 #
 
 require 'digest/sha1'
 require 'basecamp'
 
 class User < ActiveRecord::Base
-  acts_as_authentic :transition_from_restful_authentication => true, :crypto_provider => Authlogic::CryptoProviders::BCrypt
+  acts_as_authentic :transition_from_restful_authentication => true, :crypto_provider => Authlogic::CryptoProviders::BCrypt, :validate_email_field => false
   
   has_and_belongs_to_many :roles
   has_many :participations
@@ -37,7 +40,11 @@ class User < ActiveRecord::Base
   #attr_accessible :login, :name, :password, :password_confirmation, :email
   
   def name
-    login
+    if first_name.nil? and surname.nil?
+      login.titleize
+    else
+      [first_name, surname].join(" ")
+    end
   end
   
   def self.basecamp_authenticate(login, password)
@@ -80,6 +87,10 @@ class User < ActiveRecord::Base
   def self.check_for_project_name(name)
     b = Basecamp.new
     b.projects.map{|a| a["name"] }.include? name
+  end
+  
+  def is_admin?
+    true
   end
 
 end

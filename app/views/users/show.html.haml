@@ -2,27 +2,24 @@
   .floatr.btn_container
     %span.btn.btn-medium-white= link_to "Set my un-availability", user_unavailabilities_path(current_user) unless params[:action] == "show" && current_user.id == params[:id]
     %span.btn.btn-medium-white= link_to "Edit", edit_user_path(@user)
-    %span.btn.btn-medium-white= link_to "Delete", user_path(@user), :confirm => "Are you sure?", :method => :delete
   = title(@user.name.titleize, :span)
 
 #overview-container
   .overview.overview-top-left
-    %p.login
-      %strong Login:
-      = h @user.login
-  
-    %p.email
-      %strong Email:
-      = h @user.email
-  
-    - if @user.locations
+    %h3 Locations
+    - if @user.locations.empty?
+      %p You are not linked to any locations yet.
+    - else
       %p.locations
-        Locations:
         - @user.locations.each do |location|
           = link_to location.name, location_path(location), :rel => "facebox"
-
-    - if @user.positions
+        = link_to "Add to location", add_location_user_path(@user), :rel => "facebox"
+    
+    %h3 Positions:
+    - if @user.positions.empty?
+      %p You are not linked to any positions yet.
+    - else
       %p.positions
-        Positions:
         - @user.positions.each do |position|
-          = link_to position.name, position_path(position), :rel => "facebox"
+          = link_to position.name, position_path(position), :rel => "facebox"  
+        = link_to "Add a role", add_position_user_path(@user), :rel => "facebox"

@@ -6,13 +6,21 @@
 
 #overview-container
   .overview.overview-top-left
-    .locations
-      %h3 Your locations:
-      %p= current_user.locations_available_for
+    %h3 Locations
+    - if @user.locations.empty?
+      %p You are not linked to any locations yet.
+    - else
+      %p.locations
+        - @user.locations.each do |location|
+          = link_to location.name, location_path(location), :rel => "facebox"
     
-    .positions
-      %h3 Your positions:
-      %p= current_user.positions_available_for
+    %h3 Roles:
+    - if @user.positions.empty?
+      %p You are not linked to any roles yet.
+    - else
+      %p.positions
+        - @user.positions.each do |position|
+          = link_to position.name, position_path(position), :rel => "facebox"
       
   #upcoming_schedule
     %h2 Upcoming Positions

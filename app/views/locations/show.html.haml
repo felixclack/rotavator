@@ -1,12 +1,23 @@
-%h1 Viewing location
+%h1.overview_h1
+  .floatr.btn_container
+    %span.btn.btn-medium-white= link_to "Edit", edit_location_path
+  = title(@object.name, :span)
 
 %div[@object]
-  %p.name
-    %strong Name
-    = h @object.name
-
-= link_to 'Edit', edit_location_path
-|
-= link_to 'Destroy', location_path, :confirm => 'Really destroy location?', :method => :delete
-|
-= link_to 'Back', locations_path
+  - if @object.services.future.empty?
+    %p 
+      There are no upcoming services at this location. 
+      Perhaps you want to 
+      = link_to "add one?", new_location_service_path(@object)
+  - else
+    %h3 Upcoming Services
+    %table
+      - @object.services.future.each do |service|
+        %tr
+          %td
+            %span= distance_of_time_in_words_to_now(service.start_at.to_time)
+          %td= service.start_at.to_formatted_s(:short)
+          %td= link_to "Rota", location_rota_path(@location, service.rotas.first) unless service.rotas.empty?
+    %p
+      Do you want to
+      = link_to "add another service?", new_location_service_path(@object)

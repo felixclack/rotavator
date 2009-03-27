@@ -9,18 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081214090133) do
-
-  create_table "formats", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "formats_positions", :id => false, :force => true do |t|
-    t.integer "format_id"
-    t.integer "position_id"
-  end
+ActiveRecord::Schema.define(:version => 20090325162553) do
 
   create_table "locations", :force => true do |t|
     t.string "name"
@@ -52,6 +41,11 @@ ActiveRecord::Schema.define(:version => 20081214090133) do
     t.string "name"
   end
 
+  create_table "positions_rota_formats", :id => false, :force => true do |t|
+    t.integer "rota_format_id"
+    t.integer "position_id"
+  end
+
   create_table "positions_users", :id => false, :force => true do |t|
     t.integer "position_id"
     t.integer "user_id"
@@ -64,6 +58,12 @@ ActiveRecord::Schema.define(:version => 20081214090133) do
   create_table "roles_users", :id => false, :force => true do |t|
     t.integer "role_id"
     t.integer "user_id"
+  end
+
+  create_table "rota_formats", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "rotas", :force => true do |t|
@@ -120,6 +120,9 @@ ActiveRecord::Schema.define(:version => 20081214090133) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "first_name"
+    t.string   "surname"
+    t.string   "phone"
   end
 
 end

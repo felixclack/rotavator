@@ -1,10 +1,6 @@
 .participation
   %p
-    = f.label :user_id, "Person"
-    = f.collection_select :user_id, @users, :id, :name
-
-  %p
-    = f.label :position_id, "Position"
-    = f.collection_select :position_id, Position.all, :id, :name
-    
-  = f.remove_link "remove"
+    = f.label :user_id, participation.position.try(:name)
+    = f.hidden_field :position_id, :value => participation.position.try(:id) unless participation.position.nil?
+    = f.collection_select :user_id, @location.get_users_for_location_and_role(participation.position.try(:name)), :id, :name, {}, :include_blank => true
+    = f.remove_link "remove"

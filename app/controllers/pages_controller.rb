@@ -8,6 +8,7 @@ class PagesController < ApplicationController
   
   def dashboard
     @page_class = "dashboard"
+    @user ||= current_user
   end
   
   

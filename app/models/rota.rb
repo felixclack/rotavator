@@ -14,13 +14,13 @@
 class Rota < ActiveRecord::Base
   belongs_to :service
   belongs_to :team
-  belongs_to :format
-  has_many :participations, :attributes => true
+  belongs_to :rota_format
+  has_many :participations, :attributes => true, :discard_if => :blank?
   has_many :users, :through => :participations
   has_many :positions, :through => :format
   
-  validates_presence_of :service_id, :team_id
-  validates_uniqueness_of :service_id, :scope => :team_id
+  #validates_presence_of :service_id, :team_id
+  #validates_uniqueness_of :service_id, :scope => :team_id
   
   named_scope :future, :include => :service, :conditions => ["services.start_at > ?", Time.now]
 end

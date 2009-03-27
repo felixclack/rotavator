@@ -1,5 +1,43 @@
-%h1 Listing locations
+%h1.overview_h1
+  .floatr.btn_container
+    - if current_user.is_admin?
+      %span.btn.btn-medium-white
+        = link_to "Create a new location", new_location_path
+  = title("Locations", :span)
 
-= render :partial => 'location', :collection => @collection
-
-= link_to 'New location', new_location_path
+#overview-container
+  
+  #upcoming
+    %h3 Upcoming services
+    - if @services.empty?
+      %p 
+        There aren't any upcoming services at the moment. 
+      - if current_user.is_admin?
+        %p  
+          Would you like to 
+          = link_to "create one?", new_service_path
+    - else
+      %table
+        - @services.each do |service|
+          %tr
+            %td
+              %span= distance_of_time_in_words_to_now(service.start_at.to_time)
+            %td= service.location.name
+            %td= service.start_at.to_formatted_s(:short)
+            %td= link_to "Rota", location_rota_path(service.location, service.rotas.first) unless service.rotas.empty?
+      - if current_user.is_admin?
+        %p
+          Do you want to
+          = link_to "add another service?", new_service_path
+            
+  #locations
+  - if @collection.empty?
+    %p You are not linked to any locations at the moment.
+  - else
+    = render :partial => 'location', :collection => @collection
+  - if current_user.is_admin?
+    %h3
+      Hey, why not add this user to a location?
+      = link_to "Add to location", add_location_user_path(current_user), :rel => "facebox"
+  
+- @page_class = "dashboard"

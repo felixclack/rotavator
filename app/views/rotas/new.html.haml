@@ -1,16 +1,21 @@
-= error_messages_for :rota
+%h1.overview_h1
+  .floatr.btn_container
+    %span.btn.btn-medium-white= link_to "Cancel", dashboard_path
+  = title("Select a service", :span)
 
-- if @location
-  %h1.overview_h1
-    .floatr.btn_container
-      %span.btn.btn-medium-white= link_to "Cancel", dashboard_path
-    = title(@location.name.titleize, :span)
+#overview-container
+  = error_messages_for :rota
+  - form_for([@location, @service, @rota]) do |form|
+    #locations
+      %h3 Locations
+      %p
+        = form.label :id, "Location"
+        = form.collection_select :id, Location.all, :id, :name, {}, :include_blank => true
     
-  #overview-container
-    - form_for([@location, @rota]) do |f|
-      = render :partial => "form", :locals => {:f => f}
-- elsif @locations
-  %h1 Select a location to create a rota
-  %ul
-    - @locations.each do |location|
-      %li= link_to location.name, new_location_rota_path(location)
+    #services
+    
+    #formats
+    
+    #rota
+    
+    %p= submit_tag "Save"

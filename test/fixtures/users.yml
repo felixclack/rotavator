@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20081212154123
+# Schema version: 20090325162553
 #
 # Table name: users
 #
@@ -19,6 +19,9 @@
 #  email               :string(255)
 #  created_at          :datetime
 #  updated_at          :datetime
+#  first_name          :string(255)
+#  surname             :string(255)
+#  phone               :string(255)
 #
 
 admin:

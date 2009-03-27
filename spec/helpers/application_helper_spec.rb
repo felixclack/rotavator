@@ -1,6 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 include ApplicationHelper
-include AuthenticatedTestHelper
 
 describe ApplicationHelper do
   
