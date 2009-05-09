@@ -4,7 +4,7 @@ require 'locations_controller'
 # Re-raise errors caught by the controller.
 class LocationsController; def rescue_action(e) raise e end; end
 
-class LocationsControllerTest < Test::Unit::TestCase
+class LocationsControllerTest < ActiveSupport::TestCase
   fixtures :locations
 
   def setup

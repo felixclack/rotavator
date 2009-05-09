@@ -8,7 +8,7 @@
   %title= @page_title
   
   = stylesheet_link_tag "app", "facebox", "eighty"
-  = javascript_include_tag "jquery", "jquery-ui", "facebox", :defaults
+  = javascript_include_tag "jquery", "jquery-ui", "facebox", 'jquery.livequery.pack', "application"
   
 %body{:class=>@page_class}
   #company_header

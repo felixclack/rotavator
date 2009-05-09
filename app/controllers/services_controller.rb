@@ -3,22 +3,29 @@ class ServicesController < ApplicationController
   belongs_to :location
   
   index.before do
-    if params[:location_id]
-      @location ||= Location.find(params[:location_id])
-    else
-      @locations ||= Location.all
-    end
+    @locations ||= Location.all unless params[:location_id]
+    @rota ||= Rota.new
   end
   
-  show.wants.js
+  index.wants.js
+  new_action.wants.js
   
-  create.wants.html { redirect_to location_services_path(@location) }
+  create do
+    wants.html { redirect_to location_services_path(@location) }
+    wants.js
+    
+    failure do
+      flash "There was an error creating that service"
+      wants.js { render :template => "services/failure.js.erb" }
+    end
+  end
+
   
   private
     def collection
       if params[:location_id]
         @location ||= Location.find(params[:location_id])
-        @collection ||= @location.services.future.all
+        @collection = @location.services.future.all
       else
         @collection ||= Service.future.all
       end

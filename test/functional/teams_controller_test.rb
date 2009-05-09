@@ -4,7 +4,7 @@ require 'teams_controller'
 # Re-raise errors caught by the controller.
 class TeamsController; def rescue_action(e) raise e end; end
 
-class TeamsControllerTest < Test::Unit::TestCase
+class TeamsControllerTest < ActiveSupport::TestCase
   fixtures :teams
 
   def setup

@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :teams
   map.resources :rotas, :only => [:index, :new]
   map.resources :services do |service|
-    service.resources :rota_format do |rota_format|
+    service.resources :rota_formats do |rota_format|
       rota_format.resources :rotas
     end
   end
@@ -26,4 +26,5 @@ ActionController::Routing::Routes.draw do |map|
   
   # Home Page
   map.dashboard "/dashboard", :controller => 'pages', :action => 'dashboard'
+  map.root :controller => "pages", :action => 'dashboard'
 end

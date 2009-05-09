@@ -1,0 +1,3 @@
+$("#new_service_form").replaceWith("<div id='new_service_form'><%= escape_javascript(render :partial => 'form_service') %></div>")
+$("select#rota_service_id").attr("disabled", true)
+$("#new_service").fadeOut("fast")

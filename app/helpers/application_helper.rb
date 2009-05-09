@@ -36,4 +36,8 @@ module ApplicationHelper
     end
   end
   
+  def next_sunday
+    Time.now.end_of_week - 13.hours + 1.second
+  end
+  
 end

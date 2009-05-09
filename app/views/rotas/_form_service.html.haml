@@ -1,7 +1,6 @@
-- fields_for(@location) do |services|
-  %h3 Services
-  %p
-    = services.label :service_id, "Service"
-    = services.collection_select :service_id, location.services.future, :id, :start_at, {}, {:include_blank => true}
-  %p
-    = link_to "Add new service", new_location_service_path(location), :class => "ajax"
+- fields_for(@rota) do |service|
+  = service.label :service_id, "Service"
+  = service.collection_select :service_id, @location.get_services_requiring_a_rota, :id, :start_at, {:prompt => "Select a service..."}
+  #new_service
+    = link_to "Add new service", new_location_service_path(@location), :class => "ajaxlink"
+  #new_service_form

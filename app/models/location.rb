@@ -16,4 +16,8 @@ class Location < ActiveRecord::Base
     self.users.reject {|user| !user.positions.map(&:name).include?(role) }
   end
   
+  def get_services_requiring_a_rota
+    self.services.future.reject{|s| !s.rotas.empty? }
+  end
+  
 end

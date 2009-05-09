@@ -1,0 +1,4 @@
+- form_for([@location,@service]) do |service|
+  = render :partial => "form", :locals => {:f => service}
+  = link_to "Save", "#", :id => "create_new_service"
+  = link_to "Cancel", "#", :id => "cancel_new_service"

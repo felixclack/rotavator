@@ -1,2 +1,5 @@
 %div[service]
-  = link_to service.start_at.to_formatted_s(:short), location_rota_path(@location, service.rotas.first)
+  - if service.rotas.empty?
+    = service.start_at
+  - else
+    = link_to service.start_at.to_formatted_s(:short), location_rota_path(@location, service.rotas.first) 

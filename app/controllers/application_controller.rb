@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user, :logged_in?
 
   helper :all
-  protect_from_forgery :secret => 'b0a876313f3f9195e9bd01473bc5cd06'
+  protect_from_forgery
   
   private
     def current_user_session

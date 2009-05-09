@@ -5,17 +5,16 @@
 
 #overview-container
   = error_messages_for :rota
-  - form_for([@location, @service, @rota]) do |form|
-    #locations
-      %h3 Locations
-      %p
-        = form.label :id, "Location"
-        = form.collection_select :id, Location.all, :id, :name, {}, :include_blank => true
+  - form_for(@rota) do |form|
+    .overview.overview-top-left
+      #locations
+        - fields_for(@location) do |location|
+          %p
+            = location.label :id, "Location"
+            = location.collection_select :id, Location.all, :id, :name, {:prompt => "Select a location..."}
     
-    #services
+      #services
     
-    #formats
+      #formats
     
     #rota
-    
-    %p= submit_tag "Save"

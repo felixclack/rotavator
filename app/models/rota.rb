@@ -17,7 +17,7 @@ class Rota < ActiveRecord::Base
   belongs_to :rota_format
   has_many :participations, :attributes => true, :discard_if => :blank?
   has_many :users, :through => :participations
-  has_many :positions, :through => :format
+  has_many :positions, :through => :rota_format
   
   #validates_presence_of :service_id, :team_id
   #validates_uniqueness_of :service_id, :scope => :team_id

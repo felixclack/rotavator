@@ -1,0 +1,2 @@
+//$("#new_service").before('<div id="flash-error"><%= escape_javascript(flash.delete(:notice)) %></div>');
+$("#new_service").before("<%= escape_javascript(error_messages_for(:service)) %>")

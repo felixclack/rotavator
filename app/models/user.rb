@@ -24,11 +24,15 @@
 #  phone               :string(255)
 #
 
-require 'digest/sha1'
+#require 'digest/sha1'
 require 'basecamp'
 
 class User < ActiveRecord::Base
-  acts_as_authentic :transition_from_restful_authentication => true, :crypto_provider => Authlogic::CryptoProviders::BCrypt, :validate_email_field => false
+  acts_as_authentic do |config|
+    config.transition_from_restful_authentication = true
+    config.crypto_provider = Authlogic::CryptoProviders::BCrypt
+    config.validate_email_field = false
+  end
   
   has_and_belongs_to_many :roles
   has_many :participations
@@ -91,6 +95,11 @@ class User < ActiveRecord::Base
   
   def is_admin?
     true
+  end
+  
+  def positions_for_rota(rota)
+    raise "Not a rota" unless rota.is_a? Rota
+    self.rotas.find(rota.id).participations(:all, :conditions => ["rota_id = ? AND position_id <> NULL", rota.id])
   end
 
 end

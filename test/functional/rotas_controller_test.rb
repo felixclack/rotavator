@@ -4,7 +4,7 @@ require 'rotas_controller'
 # Re-raise errors caught by the controller.
 class RotasController; def rescue_action(e) raise e end; end
 
-class RotasControllerTest < Test::Unit::TestCase
+class RotasControllerTest < ActiveSupport::TestCase
   fixtures :rotas
 
   def setup

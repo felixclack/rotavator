@@ -6,7 +6,18 @@
   = title("Locations", :span)
 
 #overview-container
-  
+  .overview.overview-top-left
+    #locations
+      %h3 Your locations
+      - if @collection.empty?
+        %p You are not linked to any locations at the moment.
+      - else
+        = render :partial => 'location', :collection => @collection
+      - if current_user.is_admin?
+        %h3
+          Hey, why not add this user to a location?
+          = link_to "Add to location", add_location_user_path(current_user), :rel => "facebox"
+    
   #upcoming
     %h3 Upcoming services
     - if @services.empty?
@@ -24,20 +35,12 @@
               %span= distance_of_time_in_words_to_now(service.start_at.to_time)
             %td= service.location.name
             %td= service.start_at.to_formatted_s(:short)
-            %td= link_to "Rota", location_rota_path(service.location, service.rotas.first) unless service.rotas.empty?
+            %td= current_user.positions_for_rota(service.rotas.first).each{|p| p.position.try(:name)} unless service.rotas.empty?
+            - if current_user.is_admin?
+              %td= link_to "Rota", location_rota_path(service.location, service.rotas.first) unless service.rotas.empty?
       - if current_user.is_admin?
         %p
           Do you want to
           = link_to "add another service?", new_service_path
-            
-  #locations
-  - if @collection.empty?
-    %p You are not linked to any locations at the moment.
-  - else
-    = render :partial => 'location', :collection => @collection
-  - if current_user.is_admin?
-    %h3
-      Hey, why not add this user to a location?
-      = link_to "Add to location", add_location_user_path(current_user), :rel => "facebox"
   
 - @page_class = "dashboard"

@@ -1,0 +1,38 @@
+development:
+  # Sqlite3 Settings
+  #adapter: sqlite3
+  #database: db/development.sqlite3
+  #timeout: 5000
+  
+  # Mysql Settings
+  adapter: mysql
+  encoding: utf8
+  database: rota_development
+  username: root
+  password:
+
+test:
+  # Sqlite3 Settings
+  #adapter: sqlite3
+  #database: db/test.sqlite3
+  #timeout: 5000
+  
+  # Mysql Settings
+  adapter: mysql
+  encoding: utf8
+  database: rota_test
+  username: root
+  password:
+
+production:
+  # Sqlite3 Settings
+  #adapter: sqlite3
+  #database: db/production.sqlite3
+  #timeout: 5000
+  
+  # Mysql Settings
+  adapter: mysql
+  encoding: utf8
+  database: rota_production
+  username: root
+  password:

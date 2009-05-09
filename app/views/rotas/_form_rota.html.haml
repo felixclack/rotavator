@@ -1,0 +1,5 @@
+%h3 The Rota
+- form_for([@location, @service, @rota]) do |f|
+  = hidden_field :rota_format, :id
+  = f.render_associated_form(@rota.participations) unless @rota.participations.empty?
+  = f.submit "Save"

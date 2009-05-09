@@ -1,8 +1,21 @@
-RAILS_GEM_VERSION = '2.2.2' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
+  config.gem 'giraffesoft-resource_controller', :lib => 'resource_controller', :source => 'http://gems.github.com'
+  config.gem 'jeremymcanally-matchy', :lib => 'matchy', :source => 'http://gems.github.com'
+  config.gem 'jeremymcanally-stump', :lib => 'stump', :source => 'http://gems.github.com'
+  config.gem 'authlogic'
+  config.gem 'thoughtbot-factory_girl', :lib => 'factory_girl', :source => 'http://gems.github.com'
+  config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
+  config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
   config.gem "authlogic"
+  config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
+  config.gem 'jeremymcanally-stump', :lib => 'stump', :source => 'http://gems.github.com'
+  config.gem 'jeremymcanally-matchy', :lib => 'matchy', :source => 'http://gems.github.com'
+  config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http://gems.github.com"
+  config.gem 'haml'
+  
   config.time_zone = 'London'
   config.action_controller.session = {
     :session_key => '_app_session',
