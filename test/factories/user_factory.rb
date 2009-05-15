@@ -5,4 +5,5 @@ Factory.define :user do |f|
   f.surname 'clack'
   f.password 'secret'
   f.password_confirmation 'secret'
+  f.persistence_token 'a_random_value'
 end

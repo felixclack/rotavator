@@ -4,7 +4,7 @@ require 'participations_controller'
 # Re-raise errors caught by the controller.
 class ParticipationsController; def rescue_action(e) raise e end; end
 
-class ParticipationsControllerTest < ActiveSupport::TestCase
+class ParticipationsControllerTest < ActionController::TestCase
   fixtures :participations
 
   def setup

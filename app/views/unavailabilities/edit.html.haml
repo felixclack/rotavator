@@ -1,0 +1,9 @@
+%h1 Editing Unavailability
+
+- form_for(@unavailability) do |form|
+  = render :partial => 'form', :locals => {:form => form}
+  %p= form.submit 'Update'
+
+%p
+  = link_to 'Show', @unavailability
+  = link_to 'Back', unavailabilities_path

@@ -4,7 +4,7 @@ require 'services_controller'
 # Re-raise errors caught by the controller.
 class ServicesController; def rescue_action(e) raise e end; end
 
-class ServicesControllerTest < ActiveSupport::TestCase
+class ServicesControllerTest < ActionController::TestCase
   fixtures :services
 
   def setup

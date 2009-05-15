@@ -4,13 +4,14 @@ require 'teams_controller'
 # Re-raise errors caught by the controller.
 class TeamsController; def rescue_action(e) raise e end; end
 
-class TeamsControllerTest < ActiveSupport::TestCase
+class TeamsControllerTest < ActionController::TestCase
   fixtures :teams
 
   def setup
     @controller = TeamsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    @team, current_object = Factory(:team)
   end
 
   def test_should_get_index
@@ -33,23 +34,23 @@ class TeamsControllerTest < ActiveSupport::TestCase
   end
 
   def test_should_show_team
-    get :show, :id => 1
+    get :show, :id => @team.id
     assert_response :success
   end
 
   def test_should_get_edit
-    get :edit, :id => 1
+    get :edit, :id => @team.id
     assert_response :success
   end
 
   def test_should_update_team
-    put :update, :id => 1, :team => { }
+    put :update, :id => @team.id, :team => { :name => "creative" }
     assert_redirected_to team_path(assigns(:team))
   end
 
   def test_should_destroy_team
     old_count = Team.count
-    delete :destroy, :id => 1
+    delete :destroy, :id => @team.id
     assert_equal old_count-1, Team.count
 
     assert_redirected_to teams_path

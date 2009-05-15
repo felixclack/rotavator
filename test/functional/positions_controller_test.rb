@@ -4,7 +4,7 @@ require 'positions_controller'
 # Re-raise errors caught by the controller.
 class PositionsController; def rescue_action(e) raise e end; end
 
-class PositionsControllerTest < ActiveSupport::TestCase
+class PositionsControllerTest < ActionController::TestCase
   fixtures :positions
 
   def setup
