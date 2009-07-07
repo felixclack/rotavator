@@ -23,11 +23,11 @@ class Unavailability < ActiveRecord::Base
   
   protected
     def from_is_in_future
-      errors.add("from", "From date should be in the future") unless from > Time.now
+      errors.add(:from, "From date should be in the future") unless from > Time.now
     end
     
     def to_is_in_future
-      errors.add("to", "To date should be in the future") unless self.to > Time.now unless to.nil?
+      errors.add(:to, "To date should be in the future") unless to > Time.now
     end
     
     def to_is_greater_than_from

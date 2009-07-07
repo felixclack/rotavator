@@ -11,7 +11,7 @@ class TeamsControllerTest < ActionController::TestCase
     @controller = TeamsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @team, current_object = Factory(:team)
+    @team, current_object, @current_object = Factory(:team)
   end
 
   def test_should_get_index

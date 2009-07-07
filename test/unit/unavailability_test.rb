@@ -34,8 +34,7 @@ class UnavailabilityTest < ActiveSupport::TestCase
       @unavailability.to = Time.now + 8.days
       assert_valid @unavailability
     end
-    
-    #should_validate_future_date :from
+
   end
   
 end

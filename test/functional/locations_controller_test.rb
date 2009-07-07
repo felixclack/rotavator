@@ -1,57 +1,70 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'locations_controller'
-
-# Re-raise errors caught by the controller.
-class LocationsController; def rescue_action(e) raise e end; end
 
 class LocationsControllerTest < ActionController::TestCase
-  fixtures :locations
-
-  def setup
-    @controller = LocationsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
+  
+  context "on GET to :index" do
+    setup do
+      get :index
+    end
+    
+    should_respond_with :success
+    should_render_template :index
   end
+  
+  context "on GET to :new" do
+    setup do
+      get :new
+    end
 
-  def test_should_get_index
-    get :index
-    assert_response :success
-    assert assigns(:locations)
+    should_respond_with :success
+    should_render_template :new
+    should_render_a_form
   end
+  
+  context "on POST to :create" do
+    setup do
+      post :create, :location => {:name => "Hartlepool"}
+    end
 
-  def test_should_get_new
-    get :new
-    assert_response :success
+    should_change "Location.count", :by => 1
   end
+  
+  context "on GET to :show" do
+    setup do
+      get :show, :id => Factory(:location).id
+    end
 
-  def test_should_create_location
-    old_count = Location.count
-    post :create, :location => { }
-    assert_equal old_count + 1, Location.count
-
-    assert_redirected_to location_path(assigns(:location))
+    should_respond_with :success
+    should_render_template :show
+    should_assign_to :location, :class => Location, :equals => '@location'
   end
-
-  def test_should_show_location
-    get :show, :id => 1
-    assert_response :success
+  
+  context "on GET to :edit" do
+    setup do
+      get :edit, :id => 1
+    end
+    
+    should_respond_with :success
+    should_render_template :edit
+    should_render_a_form
   end
+  
+  context "on PUT to :update" do
+    setup do
+      @location = Factory(:location)
+      put :update, :id => @location.id, :location => {:name => "Teesside"}
+    end
 
-  def test_should_get_edit
-    get :edit, :id => 1
-    assert_response :success
+    should_redirect_to "location_path(@location)"
   end
+  
+  context "on DELETE to :destroy" do
+    setup do
+      @location = Factory(:location)
+      delete :destroy, :id => @location.id
+    end
 
-  def test_should_update_location
-    put :update, :id => 1, :location => { }
-    assert_redirected_to location_path(assigns(:location))
-  end
-
-  def test_should_destroy_location
-    old_count = Location.count
-    delete :destroy, :id => 1
-    assert_equal old_count-1, Location.count
-
-    assert_redirected_to locations_path
+    should_change "Location.count", :by => 1
+    should_redirect_to "locations_path"
   end
 end

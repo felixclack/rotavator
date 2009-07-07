@@ -36,7 +36,7 @@
             %td.date= participation.rota.service.start_at.to_formatted_s(:short)
             %td.location= h participation.rota.service.location.name
             %td.position= h participation.position.name
-            %td.actions= actions_for_participation(participation)
+            %td.actions- actions_for_participation(participation)
   
   #unavailability
     %h2 Un-Availability
